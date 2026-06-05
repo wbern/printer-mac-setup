@@ -11,6 +11,8 @@ in the header lets users switch manually.
 
 ## What's in here
 
+All site files live under `docs/`.
+
 | File | Purpose |
 |------|---------|
 | `index.html` | The page users visit — a 5-step wizard (welcome → login → open Terminal/PowerShell → paste command → done), **OS-aware (Mac/Windows)**, EN/SV, dark theme matching `cc-onboarding-personas`. Generates each user's personalized command. |
@@ -21,7 +23,6 @@ in the header lets users switch manually.
 | **Windows** | |
 | `install.ps1` | The `irm … \| iex` installer. Self-elevates (UAC), prompts for initials + PIN, downloads the driver, applies the `RpcAuthnLevelPrivacyEnabled=0` registry fix + `cmdkey` credential + Olivetti PS driver. Source of truth: `printer-windows-setup/web_install.ps1`. |
 | `printer-driver-win-x64.zip` | Olivetti Universal PS v3.9.12 driver, x64 only (52 MB). Zipped from `printer-windows-setup/GEUPDPSWin_3912040MU/driver/win_x64`; INF `KOAWNAA_.inf` at the zip root. Fetched at runtime by `install.ps1`. |
-| `CNAME` | Custom domain (`printer.bernting.se`). Change or delete to use a different host. |
 
 ## One-time setup
 
@@ -50,10 +51,12 @@ in the header lets users switch manually.
 
 ## Updating later
 
-- Change the Mac backend? Re-copy it: `cp ../bin/km9100auth km9100auth`, commit,
-  push.
-- Change the Windows installer? Edit `printer-windows-setup/web_install.ps1`, then
-  `cp` it to `docs/install.ps1`, commit, push.
+- Change the Mac backend? Edit `docs/km9100auth` directly, commit, push. (The
+  local `install_printer.sh` keeps its own copy at `bin/km9100auth`; both are
+  gitignored, on-disk only.)
+- Change the Windows installer? Edit `docs/install.ps1` directly, commit, push.
+  The local `printer-windows-setup/web_install.ps1` is the original source for
+  reference.
 - Installers fetch the latest `install.sh` / `install.ps1` (and the Mac backend)
   at run time, so users get fixes automatically the next time they run it.
 

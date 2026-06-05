@@ -6,3 +6,7 @@ verify/
 
 # Windows source + drivers (large binaries, contain real creds): keep local only
 printer-windows-setup/
+
+# Local Mac dev/admin tools (not part of the shipped site): keep on disk only
+install_printer.sh
+bin/
