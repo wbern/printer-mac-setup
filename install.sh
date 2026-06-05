@@ -16,7 +16,8 @@
 #   3. Installs the km9100auth CUPS backend (Perl) that injects the PJL auth
 #      header — and strips the KMCOETYPE line that otherwise makes GUI prints
 #      fail with "Login Error".
-#   4. Creates the Olivetti_MF224 queue with those credentials, makes it the
+#   4. Creates the Room_Business_Center_Olivetti_MF224 queue with those
+#      credentials, makes it the
 #      default, and removes any no-auth duplicate macOS auto-created.
 #   5. Prints a confirmation page.
 
@@ -28,7 +29,7 @@ BACKEND_URL="${PRINTER_BACKEND_URL:-$SITE/km9100auth}" # the Perl backend
 DRIVER_URL="${PRINTER_DRIVER_URL:-$SITE/km-c250i-driver.pkg}" # KM driver pkg/dmg
 PRINTER_HOST="${PRINTER_HOST:-192.168.9.15}"
 PRINTER_PORT="${PRINTER_PORT:-9100}"
-QUEUE_NAME="${PRINTER_QUEUE:-Olivetti_MF224}"
+QUEUE_NAME="${PRINTER_QUEUE:-Room_Business_Center_Olivetti_MF224}"
 # -----------------------------------------------------------------------------
 
 PPD_GZ="/Library/Printers/PPDs/Contents/Resources/KONICAMINOLTAC250i.gz"
@@ -143,7 +144,7 @@ trap 'rm -f "$PPD_TMP"' EXIT
 gunzip -kc "$PPD_GZ" > "$PPD_TMP"
 
 sudo lpadmin -p "$QUEUE_NAME" -E -v "$DEVICE_URI" -P "$PPD_TMP" \
-    -D "Olivetti MF224" -L "Office" \
+    -D "Room_Business_Center_Olivetti_MF224" -L "Office" \
     -o KMAuthentication=True -o UserType=Private \
     -o CertServerType=Number -o CertServerNum=Device
 sudo cupsenable "$QUEUE_NAME" >/dev/null 2>&1 || true

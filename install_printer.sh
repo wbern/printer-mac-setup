@@ -11,7 +11,7 @@
 #   1. If the KM C250i PPD isn't installed, installs a bundled driver (.pkg
 #      or .dmg) sitting next to this script (or in a 'driver/' subdir).
 #   2. Installs the km9100auth CUPS backend (sudo, one-time per Mac).
-#   3. Creates or reconfigures the Olivetti_MF224 CUPS queue to use that
+#   3. Creates or reconfigures the Room_Business_Center_Olivetti_MF224 CUPS queue to use that
 #      backend with the user's own credentials.
 #   4. Smoke-tests by sending a small print and polling the printer's SNMP
 #      job log to confirm it actually printed (not just CUPS-completed).
@@ -20,7 +20,7 @@ set -euo pipefail
 
 PRINTER_HOST="192.168.9.15"
 PRINTER_PORT=9100
-QUEUE_NAME="Olivetti_MF224"
+QUEUE_NAME="Room_Business_Center_Olivetti_MF224"
 PPD_GZ="/Library/Printers/PPDs/Contents/Resources/KONICAMINOLTAC250i.gz"
 BACKEND_DEST="/usr/libexec/cups/backend/km9100auth"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

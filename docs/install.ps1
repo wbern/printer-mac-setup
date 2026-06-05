@@ -24,7 +24,7 @@ param(
     [string]$Password,
     [string]$PrinterIP   = "192.168.9.15",
     [int]   $PrinterPort = 9100,
-    [string]$PrinterName = "Room Skrivare - Olivetti MF224",
+    [string]$PrinterName = "Room_Business_Center_Olivetti_MF224",
     [switch]$NoTest
 )
 
