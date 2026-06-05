@@ -63,7 +63,7 @@ in the header lets users switch manually.
   Users who prefer not to can tick the box on the page; the installer then prompts
   for the PIN in Terminal instead. `install.sh` also removes the no-auth
   `_192_168_9_15`-style duplicate queue macOS auto-creates and sets
-  `Olivetti_MF224` as the default — the two things that broke printing originally.
+  `Room_Business_Center_Olivetti_MF224` as the default — the two things that broke printing originally.
 - **Windows:** the `irm … | iex` one-liner never carries the PIN — `install.ps1`
   always prompts for initials + PIN inside the elevated PowerShell window. The
   three things it must do together (any one alone fails silently): the
