@@ -4,11 +4,11 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>ROOM Business Center · Printer Setup</title>
-<meta name="description" content="Add the ROOM Business Center office printer to your Mac or Windows PC in two minutes — step by step, copy and paste." />
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%96%A8%EF%B8%8F%3C/text%3E%3C/svg%3E" />
+<meta name="description" content="Add the ROOM Business Center office printer to your Mac or Windows PC in about two minutes. Copy and paste, no technical know-how needed." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Cpath%20fill='%231E3A5F'%20d='M7%203h10v4H7zM5%208h14a2%202%200%200%201%202%202v5h-4v-2H7v2H3v-5a2%202%200%200%201%202-2zm2%207h10v6H7z'/%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
   tailwind.config = {
@@ -21,7 +21,7 @@
         surface: '#F0F2F5',
       },
       fontFamily: {
-        sans: ['Inter','-apple-system','system-ui','Segoe UI','Roboto','sans-serif'],
+        sans: ['-apple-system','BlinkMacSystemFont','Segoe UI','system-ui','sans-serif'],
         head: ['Montserrat','-apple-system','system-ui','Segoe UI','sans-serif'],
         mono: ['ui-monospace','SFMono-Regular','Menlo','monospace'],
       }
@@ -29,7 +29,7 @@
   };
 </script>
 <style>
-  body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; }
   [hidden] { display: none !important; }   /* beat Tailwind's display utilities */
   ::selection { background: rgba(30,58,95,.15); }
   html { scroll-behavior: smooth; }
@@ -66,10 +66,23 @@
       <button onclick="setOS('mac')" id="os-mac" class="px-3 py-1 rounded-md font-medium transition-colors">macOS</button>
       <button onclick="setOS('win')" id="os-win" class="px-3 py-1 rounded-md font-medium transition-colors">Windows</button>
     </div>
-    <!-- lang toggle -->
-    <div class="flex gap-1">
-      <button onclick="setLang('en')" id="lang-en" class="px-2.5 py-1 rounded-md font-medium">EN</button>
-      <button onclick="setLang('sv')" id="lang-sv" class="px-2.5 py-1 rounded-md font-medium">SV</button>
+    <!-- lang toggle (SVG flags) -->
+    <div class="flex items-center gap-2">
+      <button onclick="setLang('sv')" id="lang-sv" aria-label="Svenska" title="Svenska">
+        <svg viewBox="0 0 16 10" class="block w-6 h-4"><rect width="16" height="10" fill="#006AA7"/><rect x="5" width="2" height="10" fill="#FECC00"/><rect y="4" width="16" height="2" fill="#FECC00"/></svg>
+      </button>
+      <button onclick="setLang('en')" id="lang-en" aria-label="English" title="English">
+        <svg viewBox="0 0 60 30" class="block w-6 h-4">
+          <clipPath id="gbflag"><rect width="60" height="30"/></clipPath>
+          <g clip-path="url(#gbflag)">
+            <rect width="60" height="30" fill="#012169"/>
+            <path d="M0,0 60,30 M60,0 0,30" stroke="#fff" stroke-width="6"/>
+            <path d="M0,0 60,30 M60,0 0,30" stroke="#C8102E" stroke-width="4"/>
+            <path d="M30,0 30,30 M0,15 60,15" stroke="#fff" stroke-width="10"/>
+            <path d="M30,0 30,30 M0,15 60,15" stroke="#C8102E" stroke-width="6"/>
+          </g>
+        </svg>
+      </button>
     </div>
   </div>
 </header>
@@ -94,18 +107,24 @@
       <!-- STEP 1 — welcome -->
       <section class="step active" data-step>
         <div class="text-center mb-8">
-          <div class="flex justify-center mb-4 text-6xl">🖨️</div>
-          <h1 class="font-head text-3xl font-extrabold text-navy mb-3" data-i18n="s1_title">Let's add the office printer</h1>
+          <div class="flex justify-center mb-5">
+            <span class="w-16 h-16 rounded-2xl bg-navy/5 grid place-items-center">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#1E3A5F" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8">
+                <path d="M6 9V3h12v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M7 13.5h2"/><rect x="6" y="16" width="12" height="5" rx="1"/>
+              </svg>
+            </span>
+          </div>
+          <h1 class="font-head text-3xl font-extrabold text-navy mb-3" data-i18n="s1_title">Add the office printer</h1>
           <p class="text-lg text-slate-600" data-i18n="s1_lead">
-            We'll do it together, step by step. Everything is copy-and-paste — no apps to install, no experience needed.
+            Five short steps, all copy and paste. No technical know-how needed.
           </p>
         </div>
         <div class="p-6 rounded-xl bg-teal/5 border border-teal/20 mb-6">
-          <h2 class="font-head text-lg font-bold text-navy mb-2" data-i18n="s1_card_t">Here's what we'll do</h2>
+          <h2 class="font-head text-lg font-bold text-navy mb-2" data-i18n="s1_card_t">How it works</h2>
           <p class="text-slate-600 text-sm" data-i18n="s1_card_d"></p>
         </div>
         <p class="text-sm text-slate-500 text-center" data-i18n="s1_foot">
-          Takes about two minutes. You can close this window any time — nothing will break.
+          About two minutes. You can close this window any time; nothing breaks.
         </p>
       </section>
 
@@ -132,8 +151,8 @@
 
         <!-- Windows: nothing to type here; the installer asks in PowerShell -->
         <div class="only-win">
-          <div class="p-5 rounded-xl bg-navy/5 border border-navy/15 flex items-start gap-3">
-            <span class="text-2xl">🔑</span>
+          <div class="p-5 rounded-xl bg-navy/5 border border-navy/15">
+            <p class="text-xs font-semibold uppercase tracking-wide text-navy mb-1.5" data-i18n="s2_winlabel">Before you start</p>
             <p class="text-sm text-slate-600" data-i18n="s2_wininfo"></p>
           </div>
         </div>
@@ -207,8 +226,14 @@
       <!-- STEP 5 — done -->
       <section class="step" data-step>
         <div class="text-center mb-8">
-          <div class="flex justify-center mb-4 text-6xl">✅</div>
-          <h1 class="font-head text-3xl font-extrabold text-navy mb-3" data-i18n="s5_title">That's it — you're set up!</h1>
+          <div class="flex justify-center mb-5">
+            <span class="w-16 h-16 rounded-full bg-teal/10 grid place-items-center">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#00A896" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8">
+                <path d="M20 6 9 17l-5-5"/>
+              </svg>
+            </span>
+          </div>
+          <h1 class="font-head text-3xl font-extrabold text-navy mb-3" data-i18n="s5_title">You're all set</h1>
           <p class="text-lg text-slate-600" data-i18n="s5_lead">A test page prints automatically to confirm it works.</p>
         </div>
         <div class="p-6 rounded-xl bg-teal/5 border border-teal/20 mb-6">
@@ -262,8 +287,8 @@
 
 <script>
 // ---- config -----------------------------------------------------------------
-const MAC_INSTALL_URL = "https://pages.bernting.se/printer-mac-setup/install.sh";
-const WIN_INSTALL_URL = "https://pages.bernting.se/printer-mac-setup/install.ps1";
+const MAC_INSTALL_URL = "https://pages.bernting.se/room-business-center-skrivare/install.sh";
+const WIN_INSTALL_URL = "https://pages.bernting.se/room-business-center-skrivare/install.ps1";
 const TOTAL = 5;
 let current = 0;
 
@@ -272,20 +297,21 @@ let current = 0;
 const I18N = {
   en: {
     brand:"Printer Setup",
-    stepfmt:"Step {n} of {t}", back:"Back", next:"Next", lets_go:"Let's go", finish:"Done", start_over:"Start over",
+    stepfmt:"Step {n} of {t}", back:"Back", next:"Next", lets_go:"Begin", finish:"Done", start_over:"Start over",
     copy:"Copy", copied:"Copied!",
-    s1_title:"Let's add the office printer",
-    s1_lead:"We'll do it together, step by step. Everything is copy-and-paste — no experience needed.",
-    s1_card_t:"Here's what we'll do",
-    mac_s1_card_d:"You'll enter your printer login, open the Terminal app, and paste one line. Your Mac sets up the printer with your login baked in — so it never asks you at the panel, and your prints come out under your own account.",
-    win_s1_card_d:"You'll open Windows PowerShell and paste one line. It downloads everything, asks for your printer login, and sets up the printer with the registry, credential, and driver fixes this printer needs — so your prints come out under your own account.",
-    s1_foot:"Takes about two minutes. You can close this window any time — nothing will break.",
+    s1_title:"Add the office printer",
+    s1_lead:"Five short steps, all copy and paste. No technical know-how needed.",
+    s1_card_t:"How it works",
+    mac_s1_card_d:"You enter your printer login, open the Terminal app, and paste one line. Your Mac configures the printer with your login built in, so it never asks at the panel and your prints come out under your own account.",
+    win_s1_card_d:"You open Windows PowerShell and paste one line. It downloads everything, asks for your printer login, and applies the registry, credential, and driver fixes this printer needs. Your prints then come out under your own account.",
+    s1_foot:"About two minutes. You can close this window any time; nothing breaks.",
 
     mac_s2_title:"Enter your printer login", win_s2_title:"Have your printer login ready",
-    mac_s2_desc:"The same username and PIN you use at the printer panel. This stays in your browser — it's only used to build your command. Nothing is sent anywhere.",
-    win_s2_desc:"On Windows the installer asks for these in the PowerShell window — there's nothing to type here. Just have them ready.",
+    mac_s2_desc:"The same username and PIN you use at the printer panel. This stays in your browser; it's only used to build your command. Nothing is sent anywhere.",
+    win_s2_desc:"On Windows the installer asks for these in the PowerShell window, so there's nothing to type here. Just have them ready.",
     s2_user:"Username", s2_pin:"PIN",
-    win_s2_wininfo:"When you run the command in the next steps, a window will ask for your <strong class=\"text-navy\">initials</strong> and <strong class=\"text-navy\">4-digit PIN</strong> — the same ones you use at the printer. Have them ready.",
+    s2_winlabel:"Before you start",
+    win_s2_wininfo:"When you run the command in the next steps, a window asks for your <strong class=\"text-navy\">initials</strong> and <strong class=\"text-navy\">4-digit PIN</strong>, the same ones you use at the printer. Have them ready.",
     mac_s2_note:"<strong class=\"text-navy\">Don't know your login?</strong> It's the username and PIN you tap in at the printer to release your prints. Ask the office if you've never set one up.",
     win_s2_note:"<strong class=\"text-navy\">Don't know your login?</strong> It's the initials and 4-digit PIN registered for you in the printer's web page. Ask the office if you've never set one up.",
 
@@ -296,48 +322,49 @@ const I18N = {
     win_s3_press:"Press the Windows key <span class=\"text-slate-400 text-sm block mt-1\">(or click it here)</span>",
     mac_s3_type:"A search bar will appear. Type:", win_s3_type:"The Start menu opens. Type:",
     s3_enter:"Then press <kbd class=\"px-2 py-0.5 rounded bg-slate-100 border border-slate-300 text-sm text-ink\">Enter</kbd>",
-    mac_s3_black:"A black window will appear. That's Terminal. Leave it open — you'll use it in the next step.",
-    win_s3_black:"A blue window will appear. That's PowerShell. Leave it open — you'll use it in the next step.",
+    mac_s3_black:"A black window will appear. That's Terminal. Leave it open; you'll use it in the next step.",
+    win_s3_black:"A blue window will appear. That's PowerShell. Leave it open; you'll use it in the next step.",
 
     s4_title:"Paste this line and press Enter",
     mac_s4_desc:"Click into the black Terminal window, paste the line below (<kbd class=\"px-2 py-0.5 rounded bg-slate-100 border border-slate-300 text-xs text-ink\">⌘V</kbd>), and press <kbd class=\"px-2 py-0.5 rounded bg-slate-100 border border-slate-300 text-xs text-ink\">Enter</kbd>.",
     win_s4_desc:"Click into the blue PowerShell window, paste the line below (<kbd class=\"px-2 py-0.5 rounded bg-slate-100 border border-slate-300 text-xs text-ink\">Ctrl+V</kbd>), and press <kbd class=\"px-2 py-0.5 rounded bg-slate-100 border border-slate-300 text-xs text-ink\">Enter</kbd>.",
-    mac_s4_pw:"<strong class=\"text-navy\">You'll be asked for your Mac password</strong> (the one you use to log in to your Mac) so it can install the printer. Type it and press Enter — the dots won't show as you type, that's normal.",
-    win_s4_pw:"<strong class=\"text-navy\">Windows will pop up a \"Yes / No\" prompt</strong> asking for permission — click <strong class=\"text-navy\">Yes</strong>. A new window opens and asks for your initials and PIN. Type them and press Enter after each.",
+    mac_s4_pw:"<strong class=\"text-navy\">You'll be asked for your Mac password</strong> (the one you use to log in to your Mac) so it can install the printer. Type it and press Enter. The dots won't show as you type; that's normal.",
+    win_s4_pw:"<strong class=\"text-navy\">Windows will pop up a \"Yes / No\" prompt</strong> asking for permission. Click <strong class=\"text-navy\">Yes</strong>. A new window opens and asks for your initials and PIN. Type them and press Enter after each.",
 
-    s5_title:"That's it — you're set up!",
+    s5_title:"You're all set",
     s5_lead:"A test page prints automatically to confirm it works.",
     s5_card_t:"From now on",
-    mac_s5_card_d:"Print from any app with <kbd class=\"px-2 py-0.5 rounded bg-slate-100 border border-slate-300 text-xs text-ink\">⌘P</kbd> and choose <strong class=\"text-navy\">Olivetti_MF224</strong>. No login needed at the printer — your prints are already tagged with your account.",
-    win_s5_card_d:"Print from any app with <kbd class=\"px-2 py-0.5 rounded bg-slate-100 border border-slate-300 text-xs text-ink\">Ctrl+P</kbd> and choose <strong class=\"text-navy\">Room Skrivare - Olivetti MF224</strong>. No login needed at the printer — your prints are already tagged with your account.",
+    mac_s5_card_d:"Print from any app with <kbd class=\"px-2 py-0.5 rounded bg-slate-100 border border-slate-300 text-xs text-ink\">⌘P</kbd> and choose <strong class=\"text-navy\">Olivetti_MF224</strong>. No login needed at the printer; your prints are already tagged with your account.",
+    win_s5_card_d:"Print from any app with <kbd class=\"px-2 py-0.5 rounded bg-slate-100 border border-slate-300 text-xs text-ink\">Ctrl+P</kbd> and choose <strong class=\"text-navy\">Room Skrivare - Olivetti MF224</strong>. No login needed at the printer; your prints are already tagged with your account.",
 
     faq_title:"If something goes wrong",
     faq1_q:"\"can't reach the printer\"",
     faq1_a:"You're not on the office network. Connect to the office Wi-Fi and run the command again.",
     faq2_q:"It printed nothing, or \"Login Error\" at the printer",
     mac_faq2_a:"Your username or PIN is wrong. Go back to step 2, fix it, and run the new command again.",
-    win_faq2_a:"Your initials or PIN are wrong, or weren't stored. Run the command again and enter them carefully — the printer must already know that login.",
+    win_faq2_a:"Your initials or PIN are wrong, or weren't stored. Run the command again and enter them carefully. The printer must already know that login.",
     mac_faq3_q:"Nothing happens after I paste", win_faq3_q:"\"running scripts is disabled\" or nothing happens",
     mac_faq3_a:"Click the Terminal window first so it's in focus, then paste (⌘V) and press Enter.",
-    win_faq3_a:"Click the PowerShell window first, then paste (Ctrl+V) and press Enter. If it mentions an execution policy, you can ignore it — the one-liner runs without one.",
+    win_faq3_a:"Click the PowerShell window first, then paste (Ctrl+V) and press Enter. If it mentions an execution policy, you can ignore it; the one-liner runs without one.",
     footer:"ROOM Business Center · Olivetti MF224 / Konica Minolta bizhub C250i",
   },
   sv: {
     brand:"Skrivarinstallation",
     stepfmt:"Steg {n} av {t}", back:"Tillbaka", next:"Nästa", lets_go:"Sätt igång", finish:"Klart", start_over:"Börja om",
     copy:"Kopiera", copied:"Kopierat!",
-    s1_title:"Nu lägger vi till kontorsskrivaren",
-    s1_lead:"Vi gör det tillsammans, steg för steg. Allt är klipp-och-klistra — ingen vana behövs.",
-    s1_card_t:"Så här gör vi",
-    mac_s1_card_d:"Du anger din skrivarinloggning, öppnar appen Terminal och klistrar in en rad. Din Mac ställer in skrivaren med din inloggning inbakad — så den frågar aldrig vid panelen, och dina utskrifter registreras på ditt eget konto.",
-    win_s1_card_d:"Du öppnar Windows PowerShell och klistrar in en rad. Den laddar ner allt, frågar efter din skrivarinloggning och gör registret-, behörighets- och drivrutinsfixarna som skrivaren behöver — så dina utskrifter registreras på ditt eget konto.",
-    s1_foot:"Tar ungefär två minuter. Du kan stänga fönstret när som helst — inget går sönder.",
+    s1_title:"Lägg till kontorsskrivaren",
+    s1_lead:"Fem korta steg, allt är klipp och klistra. Inga tekniska förkunskaper behövs.",
+    s1_card_t:"Så fungerar det",
+    mac_s1_card_d:"Du anger din skrivarinloggning, öppnar appen Terminal och klistrar in en rad. Din Mac ställer in skrivaren med din inloggning inbakad, så den frågar aldrig vid panelen och dina utskrifter registreras på ditt eget konto.",
+    win_s1_card_d:"Du öppnar Windows PowerShell och klistrar in en rad. Den laddar ner allt, frågar efter din skrivarinloggning och gör registret-, behörighets- och drivrutinsfixarna som skrivaren behöver. Dina utskrifter registreras sedan på ditt eget konto.",
+    s1_foot:"Ungefär två minuter. Du kan stänga fönstret när som helst. Inget går sönder.",
 
     mac_s2_title:"Ange din skrivarinloggning", win_s2_title:"Ha din skrivarinloggning redo",
-    mac_s2_desc:"Samma användarnamn och PIN som du använder vid skrivaren. Det stannar i din webbläsare — det används bara för att bygga ditt kommando. Inget skickas någonstans.",
-    win_s2_desc:"På Windows frågar installeraren efter dessa i PowerShell-fönstret — det finns inget att skriva här. Ha dem bara redo.",
+    mac_s2_desc:"Samma användarnamn och PIN som du använder vid skrivaren. Det stannar i din webbläsare och används bara för att bygga ditt kommando. Inget skickas någonstans.",
+    win_s2_desc:"På Windows frågar installeraren efter dessa i PowerShell-fönstret, så det finns inget att skriva här. Ha dem bara redo.",
     s2_user:"Användarnamn", s2_pin:"PIN",
-    win_s2_wininfo:"När du kör kommandot i nästa steg frågar ett fönster efter dina <strong class=\"text-navy\">initialer</strong> och din <strong class=\"text-navy\">4-siffriga PIN</strong> — samma som vid skrivaren. Ha dem redo.",
+    s2_winlabel:"Innan du börjar",
+    win_s2_wininfo:"När du kör kommandot i nästa steg frågar ett fönster efter dina <strong class=\"text-navy\">initialer</strong> och din <strong class=\"text-navy\">4-siffriga PIN</strong>, samma som vid skrivaren. Ha dem redo.",
     mac_s2_note:"<strong class=\"text-navy\">Vet du inte din inloggning?</strong> Det är användarnamnet och PIN-koden du knappar in vid skrivaren för att hämta dina utskrifter. Fråga kontoret om du aldrig skapat en.",
     win_s2_note:"<strong class=\"text-navy\">Vet du inte din inloggning?</strong> Det är initialerna och den 4-siffriga PIN-koden som registrerats för dig i skrivarens webbsida. Fråga kontoret om du aldrig skapat en.",
 
@@ -348,35 +375,35 @@ const I18N = {
     win_s3_press:"Tryck på Windows-tangenten <span class=\"text-slate-400 text-sm block mt-1\">(eller klicka på den här)</span>",
     mac_s3_type:"En sökruta dyker upp. Skriv:", win_s3_type:"Startmenyn öppnas. Skriv:",
     s3_enter:"Tryck sedan <kbd class=\"px-2 py-0.5 rounded bg-slate-100 border border-slate-300 text-sm text-ink\">Retur</kbd>",
-    mac_s3_black:"Ett svart fönster dyker upp. Det är Terminal. Lämna det öppet — du använder det i nästa steg.",
-    win_s3_black:"Ett blått fönster dyker upp. Det är PowerShell. Lämna det öppet — du använder det i nästa steg.",
+    mac_s3_black:"Ett svart fönster dyker upp. Det är Terminal. Lämna det öppet, du använder det i nästa steg.",
+    win_s3_black:"Ett blått fönster dyker upp. Det är PowerShell. Lämna det öppet, du använder det i nästa steg.",
 
     s4_title:"Klistra in raden och tryck Retur",
     mac_s4_desc:"Klicka i det svarta Terminal-fönstret, klistra in raden nedan (<kbd class=\"px-2 py-0.5 rounded bg-slate-100 border border-slate-300 text-xs text-ink\">⌘V</kbd>) och tryck <kbd class=\"px-2 py-0.5 rounded bg-slate-100 border border-slate-300 text-xs text-ink\">Retur</kbd>.",
     win_s4_desc:"Klicka i det blå PowerShell-fönstret, klistra in raden nedan (<kbd class=\"px-2 py-0.5 rounded bg-slate-100 border border-slate-300 text-xs text-ink\">Ctrl+V</kbd>) och tryck <kbd class=\"px-2 py-0.5 rounded bg-slate-100 border border-slate-300 text-xs text-ink\">Retur</kbd>.",
-    mac_s4_pw:"<strong class=\"text-navy\">Du blir ombedd att ange ditt Mac-lösenord</strong> (det du loggar in på din Mac med) för att installera skrivaren. Skriv det och tryck Retur — prickarna syns inte medan du skriver, det är normalt.",
-    win_s4_pw:"<strong class=\"text-navy\">Windows visar en \"Ja / Nej\"-ruta</strong> som ber om tillåtelse — klicka <strong class=\"text-navy\">Ja</strong>. Ett nytt fönster öppnas och frågar efter dina initialer och PIN. Skriv dem och tryck Retur efter varje.",
+    mac_s4_pw:"<strong class=\"text-navy\">Du blir ombedd att ange ditt Mac-lösenord</strong> (det du loggar in på din Mac med) för att installera skrivaren. Skriv det och tryck Retur. Prickarna syns inte medan du skriver, det är normalt.",
+    win_s4_pw:"<strong class=\"text-navy\">Windows visar en \"Ja / Nej\"-ruta</strong> som ber om tillåtelse. Klicka <strong class=\"text-navy\">Ja</strong>. Ett nytt fönster öppnas och frågar efter dina initialer och PIN. Skriv dem och tryck Retur efter varje.",
 
-    s5_title:"Klart — allt är inställt!",
+    s5_title:"Allt är klart",
     s5_lead:"En testsida skrivs ut automatiskt för att bekräfta att det fungerar.",
     s5_card_t:"Från och med nu",
-    mac_s5_card_d:"Skriv ut från valfri app med <kbd class=\"px-2 py-0.5 rounded bg-slate-100 border border-slate-300 text-xs text-ink\">⌘P</kbd> och välj <strong class=\"text-navy\">Olivetti_MF224</strong>. Ingen inloggning behövs vid skrivaren — dina utskrifter är redan märkta med ditt konto.",
-    win_s5_card_d:"Skriv ut från valfri app med <kbd class=\"px-2 py-0.5 rounded bg-slate-100 border border-slate-300 text-xs text-ink\">Ctrl+P</kbd> och välj <strong class=\"text-navy\">Room Skrivare - Olivetti MF224</strong>. Ingen inloggning behövs vid skrivaren — dina utskrifter är redan märkta med ditt konto.",
+    mac_s5_card_d:"Skriv ut från valfri app med <kbd class=\"px-2 py-0.5 rounded bg-slate-100 border border-slate-300 text-xs text-ink\">⌘P</kbd> och välj <strong class=\"text-navy\">Olivetti_MF224</strong>. Ingen inloggning behövs vid skrivaren. Dina utskrifter är redan märkta med ditt konto.",
+    win_s5_card_d:"Skriv ut från valfri app med <kbd class=\"px-2 py-0.5 rounded bg-slate-100 border border-slate-300 text-xs text-ink\">Ctrl+P</kbd> och välj <strong class=\"text-navy\">Room Skrivare - Olivetti MF224</strong>. Ingen inloggning behövs vid skrivaren. Dina utskrifter är redan märkta med ditt konto.",
 
     faq_title:"Om något går fel",
     faq1_q:"\"can't reach the printer\"",
     faq1_a:"Du är inte på kontorsnätverket. Anslut till kontorets Wi-Fi och kör kommandot igen.",
     faq2_q:"Inget skrevs ut, eller \"Login Error\" vid skrivaren",
     mac_faq2_a:"Ditt användarnamn eller PIN är fel. Gå tillbaka till steg 2, rätta det och kör det nya kommandot igen.",
-    win_faq2_a:"Dina initialer eller PIN är fel, eller sparades inte. Kör kommandot igen och skriv in dem noggrant — skrivaren måste redan känna till inloggningen.",
+    win_faq2_a:"Dina initialer eller PIN är fel, eller sparades inte. Kör kommandot igen och skriv in dem noggrant. Skrivaren måste redan känna till inloggningen.",
     mac_faq3_q:"Inget händer efter att jag klistrat in", win_faq3_q:"\"körning av skript är inaktiverat\" eller inget händer",
     mac_faq3_a:"Klicka först i Terminal-fönstret så det är aktivt, klistra sedan in (⌘V) och tryck Retur.",
-    win_faq3_a:"Klicka först i PowerShell-fönstret, klistra sedan in (Ctrl+V) och tryck Retur. Nämns en \"execution policy\" kan du strunta i det — enradskommandot körs ändå.",
+    win_faq3_a:"Klicka först i PowerShell-fönstret, klistra sedan in (Ctrl+V) och tryck Retur. Nämns en \"execution policy\" kan du strunta i det. Enradskommandot körs ändå.",
     footer:"ROOM Business Center · Olivetti MF224 / Konica Minolta bizhub C250i",
   }
 };
 
-let lang = (navigator.language||"en").toLowerCase().startsWith("sv") ? "sv" : "en";
+let lang = "sv";   // Swedish is always the default
 let os = /Win/i.test(navigator.userAgent) ? "win" : "mac";
 
 function t(key){ const L = I18N[lang]; return (L[os+'_'+key] !== undefined ? L[os+'_'+key] : L[key]) || ""; }
@@ -479,8 +506,9 @@ function setLang(l){
   lang = l;
   document.documentElement.lang = l;
   applyText();
-  document.getElementById('lang-en').className = "px-2.5 py-1 rounded-md font-medium " + (l==='en'?'bg-navy text-white':'text-slate-500 hover:text-navy');
-  document.getElementById('lang-sv').className = "px-2.5 py-1 rounded-md font-medium " + (l==='sv'?'bg-navy text-white':'text-slate-500 hover:text-navy');
+  const flagBase = "block p-0 bg-transparent cursor-pointer rounded-[3px] overflow-hidden ring-offset-1 ring-offset-paper transition ";
+  document.getElementById('lang-en').className = flagBase + (l==='en'?'ring-2 ring-navy':'opacity-45 grayscale hover:opacity-100 hover:grayscale-0');
+  document.getElementById('lang-sv').className = flagBase + (l==='sv'?'ring-2 ring-navy':'opacity-45 grayscale hover:opacity-100 hover:grayscale-0');
   rebuild();
   render();
 }
