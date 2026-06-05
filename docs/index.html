@@ -61,11 +61,9 @@
 
 <!-- header -->
 <header class="flex items-center justify-between px-5 py-4 gap-3 border-b border-slate-200">
-  <div class="flex items-center gap-2.5">
+  <div class="flex items-center gap-2">
     <span class="font-head text-lg font-extrabold tracking-tight text-navy">ROOM</span>
     <span class="hidden sm:inline font-head font-semibold text-sm text-slate-400">Business Center</span>
-    <span class="mx-0.5 text-slate-300">·</span>
-    <span class="text-sm text-slate-500" data-i18n="brand">Printer Setup</span>
   </div>
   <div class="flex items-center gap-3 text-sm">
     <!-- OS toggle -->
@@ -99,9 +97,8 @@
 
     <!-- progress -->
     <div class="mb-8">
-      <div class="flex items-center justify-between text-sm text-slate-500 mb-2">
+      <div class="flex items-center text-sm text-slate-500 mb-2">
         <span id="step-label"></span>
-        <span id="step-pct" class="text-slate-400"></span>
       </div>
       <div class="w-full h-1.5 bg-slate-200 rounded-full overflow-hidden">
         <div id="progress-bar" class="h-full bg-teal rounded-full transition-all duration-500" style="width:20%"></div>
@@ -280,7 +277,7 @@
 </main>
 
 <footer class="text-center text-xs text-slate-400 pb-6">
-  <span data-i18n="footer">ROOM Business Center · Olivetti MF224 / Konica Minolta bizhub C250i</span>
+  <span data-i18n="footer">ROOM Business Center · Olivetti MF224</span>
 </footer>
 
 <script>
@@ -339,7 +336,7 @@ const I18N = {
     mac_faq3_q:"Nothing happens after I paste", win_faq3_q:"Nothing happens, or \"scripts disabled\"",
     mac_faq3_a:"Click the Terminal window first, then paste.",
     win_faq3_a:"Click the PowerShell window first, then paste.",
-    footer:"ROOM Business Center · Olivetti MF224 / Konica Minolta bizhub C250i",
+    footer:"ROOM Business Center · Olivetti MF224",
   },
   sv: {
     brand:"Skrivarinstallation",
@@ -387,7 +384,7 @@ const I18N = {
     mac_faq3_q:"Inget händer efter inklistring", win_faq3_q:"Inget händer, eller \"skript inaktiverat\"",
     mac_faq3_a:"Klicka i Terminal-fönstret först, klistra sedan in.",
     win_faq3_a:"Klicka i PowerShell-fönstret först, klistra sedan in.",
-    footer:"ROOM Business Center · Olivetti MF224 / Konica Minolta bizhub C250i",
+    footer:"ROOM Business Center · Olivetti MF224",
   }
 };
 
@@ -452,7 +449,6 @@ function render(){
   document.getElementById('progress-bar').style.width = pct + "%";
   document.getElementById('step-label').textContent =
     I18N[lang].stepfmt.replace('{n}', current+1).replace('{t}', TOTAL);
-  document.getElementById('step-pct').textContent = pct + "%";
   document.getElementById('btn-back').style.visibility = current===0 ? 'hidden' : 'visible';
   const nl = document.getElementById('next-label');
   const nextBtn = document.getElementById('btn-next');
