@@ -2,8 +2,8 @@
 # One-shot office-printer installer for macOS, designed to run straight from the
 # web with no prerequisites:
 #
-#   curl -fsSL https://printer.bernting.se/install.sh | bash
-#   curl -fsSL https://printer.bernting.se/install.sh | bash -s -- -u abc -p 1234
+#   curl -fsSL https://pages.bernting.se/printer-mac-setup/install.sh | bash
+#   curl -fsSL https://pages.bernting.se/printer-mac-setup/install.sh | bash -s -- -u abc -p 1234
 #
 # It installs the Olivetti MF224 / Konica Minolta bizhub C250i (192.168.9.15)
 # with per-user authentication baked in, so the printer never prompts at the
@@ -23,7 +23,7 @@
 set -euo pipefail
 
 # ---- CONFIG (edit these to match where you host the files) -------------------
-SITE="${PRINTER_SITE:-https://printer.bernting.se}"   # GitHub Pages origin
+SITE="${PRINTER_SITE:-https://pages.bernting.se/printer-mac-setup}"   # GitHub Pages origin
 BACKEND_URL="${PRINTER_BACKEND_URL:-$SITE/km9100auth}" # the Perl backend
 DRIVER_URL="${PRINTER_DRIVER_URL:-$SITE/km-c250i-driver.pkg}" # KM driver pkg/dmg
 PRINTER_HOST="${PRINTER_HOST:-192.168.9.15}"

@@ -3,28 +3,44 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Set up the office printer</title>
-<meta name="description" content="Add the office printer to your Mac or Windows PC in two minutes — step by step, copy and paste." />
+<title>ROOM Business Center · Printer Setup</title>
+<meta name="description" content="Add the ROOM Business Center office printer to your Mac or Windows PC in two minutes — step by step, copy and paste." />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%96%A8%EF%B8%8F%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
   tailwind.config = {
-    theme: { extend: { fontFamily: { mono: ['ui-monospace','SFMono-Regular','Menlo','monospace'] } } }
+    theme: { extend: {
+      colors: {
+        navy:    { DEFAULT: '#1E3A5F', dark: '#16304D' },
+        teal:    { DEFAULT: '#00A896', dark: '#008476' },
+        ink:     '#1A1A2E',
+        paper:   '#FAFBFC',
+        surface: '#F0F2F5',
+      },
+      fontFamily: {
+        sans: ['Inter','-apple-system','system-ui','Segoe UI','Roboto','sans-serif'],
+        head: ['Montserrat','-apple-system','system-ui','Segoe UI','sans-serif'],
+        mono: ['ui-monospace','SFMono-Regular','Menlo','monospace'],
+      }
+    } }
   };
 </script>
 <style>
-  body { font-family: system-ui, -apple-system, sans-serif; }
+  body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
   [hidden] { display: none !important; }   /* beat Tailwind's display utilities */
-  ::selection { background: rgba(99,102,241,.3); }
+  ::selection { background: rgba(30,58,95,.15); }
   html { scroll-behavior: smooth; }
   .step { display: none; }
   .step.active { display: block; animation: fade .35s ease both; }
   @keyframes fade { from { opacity:0; transform: translateY(8px);} to {opacity:1; transform:none;} }
   .sparkle-particle {
     position: absolute; width: var(--size); height: var(--size);
-    background: #818cf8; border-radius: 50%; top: 50%; left: 50%;
+    background: #00A896; border-radius: 50%; top: 50%; left: 50%;
     pointer-events: none; animation: sparkle-fly var(--duration) ease-out forwards;
-    box-shadow: 0 0 6px 2px rgba(129,140,248,.6);
+    box-shadow: 0 0 6px 2px rgba(0,168,150,.5);
   }
   @keyframes sparkle-fly {
     0% { opacity:1; transform: translate(-50%,-50%) scale(1); }
@@ -34,17 +50,19 @@
   pre.cmd::-webkit-scrollbar-thumb { background: #475569; border-radius: 999px; }
 </style>
 </head>
-<body class="min-h-screen flex flex-col bg-slate-900 text-slate-200 antialiased">
+<body class="min-h-screen flex flex-col bg-paper text-ink antialiased font-sans">
 
 <!-- header -->
-<header class="flex items-center justify-between px-5 pt-4 gap-3">
-  <div class="flex items-center gap-2 font-semibold text-slate-200">
-    <span class="inline-grid place-items-center w-7 h-7 rounded-lg bg-indigo-600 text-white text-sm">🖨️</span>
-    <span data-i18n="brand">Office Printer Setup</span>
+<header class="flex items-center justify-between px-5 py-4 gap-3 border-b border-slate-200">
+  <div class="flex items-center gap-2.5">
+    <span class="font-head text-lg font-extrabold tracking-tight text-navy">ROOM</span>
+    <span class="hidden sm:inline font-head font-semibold text-sm text-slate-400">Business Center</span>
+    <span class="mx-0.5 text-slate-300">·</span>
+    <span class="text-sm text-slate-500" data-i18n="brand">Printer Setup</span>
   </div>
   <div class="flex items-center gap-3 text-sm">
     <!-- OS toggle -->
-    <div class="flex rounded-lg bg-slate-800 border border-slate-700 p-0.5">
+    <div class="flex rounded-lg bg-white border border-slate-200 p-0.5">
       <button onclick="setOS('mac')" id="os-mac" class="px-3 py-1 rounded-md font-medium transition-colors">macOS</button>
       <button onclick="setOS('win')" id="os-win" class="px-3 py-1 rounded-md font-medium transition-colors">Windows</button>
     </div>
@@ -61,12 +79,12 @@
 
     <!-- progress -->
     <div class="mb-8">
-      <div class="flex items-center justify-between text-sm text-slate-400 mb-2">
+      <div class="flex items-center justify-between text-sm text-slate-500 mb-2">
         <span id="step-label"></span>
-        <span id="step-pct" class="text-slate-500"></span>
+        <span id="step-pct" class="text-slate-400"></span>
       </div>
-      <div class="w-full h-1.5 bg-slate-700 rounded-full overflow-hidden">
-        <div id="progress-bar" class="h-full bg-indigo-500 rounded-full transition-all duration-500" style="width:20%"></div>
+      <div class="w-full h-1.5 bg-slate-200 rounded-full overflow-hidden">
+        <div id="progress-bar" class="h-full bg-teal rounded-full transition-all duration-500" style="width:20%"></div>
       </div>
     </div>
 
@@ -77,112 +95,112 @@
       <section class="step active" data-step>
         <div class="text-center mb-8">
           <div class="flex justify-center mb-4 text-6xl">🖨️</div>
-          <h1 class="text-3xl font-bold text-white mb-3" data-i18n="s1_title">Let's add the office printer</h1>
-          <p class="text-lg text-slate-300" data-i18n="s1_lead">
+          <h1 class="font-head text-3xl font-extrabold text-navy mb-3" data-i18n="s1_title">Let's add the office printer</h1>
+          <p class="text-lg text-slate-600" data-i18n="s1_lead">
             We'll do it together, step by step. Everything is copy-and-paste — no apps to install, no experience needed.
           </p>
         </div>
-        <div class="p-6 rounded-xl bg-emerald-500/10 border border-emerald-500/20 mb-6">
-          <h2 class="text-lg font-semibold text-white mb-2" data-i18n="s1_card_t">Here's what we'll do</h2>
-          <p class="text-slate-300 text-sm" data-i18n="s1_card_d"></p>
+        <div class="p-6 rounded-xl bg-teal/5 border border-teal/20 mb-6">
+          <h2 class="font-head text-lg font-bold text-navy mb-2" data-i18n="s1_card_t">Here's what we'll do</h2>
+          <p class="text-slate-600 text-sm" data-i18n="s1_card_d"></p>
         </div>
-        <p class="text-sm text-slate-400 text-center" data-i18n="s1_foot">
+        <p class="text-sm text-slate-500 text-center" data-i18n="s1_foot">
           Takes about two minutes. You can close this window any time — nothing will break.
         </p>
       </section>
 
       <!-- STEP 2 — login -->
       <section class="step" data-step>
-        <h1 class="text-3xl font-bold text-white mb-2" data-i18n="s2_title">Enter your printer login</h1>
-        <p class="text-slate-400 mb-6" data-i18n="s2_desc"></p>
+        <h1 class="font-head text-3xl font-extrabold text-navy mb-2" data-i18n="s2_title">Enter your printer login</h1>
+        <p class="text-slate-500 mb-6" data-i18n="s2_desc"></p>
 
         <!-- Mac: build the command from the form -->
         <div class="only-mac">
           <div class="grid sm:grid-cols-2 gap-4">
             <label class="block">
-              <span class="text-xs font-medium text-slate-400" data-i18n="s2_user">Username</span>
+              <span class="text-xs font-medium text-slate-500" data-i18n="s2_user">Username</span>
               <input id="f-user" oninput="rebuild()" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="e.g. abc"
-                class="mt-1 w-full rounded-lg bg-slate-800 border border-slate-700 px-3 py-2.5 text-white placeholder-slate-500 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/30 outline-none" />
+                class="mt-1 w-full rounded-lg bg-white border border-slate-300 px-3 py-2.5 text-ink placeholder-slate-400 focus:border-navy focus:ring-2 focus:ring-navy/20 outline-none" />
             </label>
             <label class="block">
-              <span class="text-xs font-medium text-slate-400" data-i18n="s2_pin">PIN</span>
+              <span class="text-xs font-medium text-slate-500" data-i18n="s2_pin">PIN</span>
               <input id="f-pin" oninput="rebuild()" autocomplete="off" placeholder="e.g. 1234"
-                class="mt-1 w-full rounded-lg bg-slate-800 border border-slate-700 px-3 py-2.5 text-white placeholder-slate-500 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/30 outline-none" />
+                class="mt-1 w-full rounded-lg bg-white border border-slate-300 px-3 py-2.5 text-ink placeholder-slate-400 focus:border-navy focus:ring-2 focus:ring-navy/20 outline-none" />
             </label>
           </div>
         </div>
 
         <!-- Windows: nothing to type here; the installer asks in PowerShell -->
         <div class="only-win">
-          <div class="p-5 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-start gap-3">
+          <div class="p-5 rounded-xl bg-navy/5 border border-navy/15 flex items-start gap-3">
             <span class="text-2xl">🔑</span>
-            <p class="text-sm text-slate-300" data-i18n="s2_wininfo"></p>
+            <p class="text-sm text-slate-600" data-i18n="s2_wininfo"></p>
           </div>
         </div>
 
-        <div class="mt-6 p-4 rounded-lg bg-slate-800/50 border border-slate-700">
-          <p class="text-sm text-slate-400" data-i18n="s2_note"></p>
+        <div class="mt-6 p-4 rounded-lg bg-surface border border-slate-200">
+          <p class="text-sm text-slate-600" data-i18n="s2_note"></p>
         </div>
       </section>
 
       <!-- STEP 3 — open the app -->
       <section class="step" data-step>
-        <h1 class="text-3xl font-bold text-white mb-2" data-i18n="s3_title">Open the Terminal app</h1>
-        <p class="text-slate-400 mb-8" data-i18n="s3_desc"></p>
+        <h1 class="font-head text-3xl font-extrabold text-navy mb-2" data-i18n="s3_title">Open the Terminal app</h1>
+        <p class="text-slate-500 mb-8" data-i18n="s3_desc"></p>
         <div class="space-y-8">
           <div class="text-center">
-            <p class="text-slate-300 mb-4 text-lg" data-i18n="s3_press"></p>
+            <p class="text-slate-600 mb-4 text-lg" data-i18n="s3_press"></p>
             <div class="flex justify-center">
               <!-- Mac keycaps: ⌘ + Space -->
               <button type="button" onclick="sparkle(this)" aria-label="Command + Space"
                 class="only-mac relative inline-flex items-center gap-3 cursor-pointer select-none bg-transparent border-none p-0">
-                <span class="px-4 py-3 rounded-lg bg-slate-700 border border-slate-600 text-white text-xl font-medium shadow-md hover:bg-slate-600 hover:border-indigo-500/50 active:translate-y-0.5 transition-all duration-150">⌘</span>
-                <span class="text-slate-500 text-lg">+</span>
-                <span class="px-6 py-3 rounded-lg bg-slate-700 border border-slate-600 text-white text-lg font-medium shadow-md hover:bg-slate-600 hover:border-indigo-500/50 active:translate-y-0.5 transition-all duration-150">Space</span>
+                <span class="px-4 py-3 rounded-lg bg-white border border-slate-300 text-navy text-xl font-semibold shadow-sm hover:border-navy/40 active:translate-y-0.5 transition-all duration-150">⌘</span>
+                <span class="text-slate-400 text-lg">+</span>
+                <span class="px-6 py-3 rounded-lg bg-white border border-slate-300 text-navy text-lg font-semibold shadow-sm hover:border-navy/40 active:translate-y-0.5 transition-all duration-150">Space</span>
               </button>
               <!-- Windows keycap: ⊞ Win -->
               <button type="button" onclick="sparkle(this)" aria-label="Windows key"
                 class="only-win relative inline-flex items-center gap-3 cursor-pointer select-none bg-transparent border-none p-0">
-                <span class="px-5 py-3 rounded-lg bg-slate-700 border border-slate-600 text-white text-lg font-medium shadow-md hover:bg-slate-600 hover:border-indigo-500/50 active:translate-y-0.5 transition-all duration-150">⊞ Win</span>
+                <span class="px-5 py-3 rounded-lg bg-white border border-slate-300 text-navy text-lg font-semibold shadow-sm hover:border-navy/40 active:translate-y-0.5 transition-all duration-150">⊞ Win</span>
               </button>
             </div>
           </div>
-          <div class="text-center p-6 rounded-xl bg-slate-800/50 border border-slate-700">
-            <p class="text-slate-300 text-lg mb-2" data-i18n="s3_type"></p>
-            <p class="text-2xl font-mono text-white font-bold tracking-wide" id="s3-app">Terminal</p>
-            <p class="text-slate-400 mt-2" data-i18n="s3_enter">
-              Then press <kbd class="px-2 py-0.5 rounded bg-slate-700 border border-slate-600 text-sm text-white">Enter</kbd>
+          <div class="text-center p-6 rounded-xl bg-surface border border-slate-200">
+            <p class="text-slate-600 text-lg mb-2" data-i18n="s3_type"></p>
+            <p class="text-2xl font-mono text-navy font-bold tracking-wide" id="s3-app">Terminal</p>
+            <p class="text-slate-500 mt-2" data-i18n="s3_enter">
+              Then press <kbd class="px-2 py-0.5 rounded bg-slate-100 border border-slate-300 text-sm text-ink">Enter</kbd>
             </p>
           </div>
-          <div class="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
-            <p class="text-sm text-slate-300 text-center" data-i18n="s3_black"></p>
+          <div class="p-4 rounded-xl bg-teal/5 border border-teal/20">
+            <p class="text-sm text-slate-600 text-center" data-i18n="s3_black"></p>
           </div>
         </div>
       </section>
 
       <!-- STEP 4 — paste command -->
       <section class="step" data-step>
-        <h1 class="text-3xl font-bold text-white mb-2" data-i18n="s4_title">Paste this line and press Enter</h1>
-        <p class="text-slate-400 mb-6" data-i18n="s4_desc"></p>
+        <h1 class="font-head text-3xl font-extrabold text-navy mb-2" data-i18n="s4_title">Paste this line and press Enter</h1>
+        <p class="text-slate-500 mb-6" data-i18n="s4_desc"></p>
 
-        <div class="rounded-xl overflow-hidden border border-slate-700 bg-[#0c0c0c] font-mono text-sm">
+        <div class="rounded-xl overflow-hidden border border-slate-300 bg-[#0c0c0c] font-mono text-sm shadow-sm">
           <div class="flex items-center gap-2 px-4 py-2.5 bg-slate-800 border-b border-slate-700">
             <span class="w-3 h-3 rounded-full bg-red-500/80"></span>
             <span class="w-3 h-3 rounded-full bg-yellow-500/80"></span>
             <span class="w-3 h-3 rounded-full bg-green-500/80"></span>
-            <span class="ml-2 text-xs text-slate-500" id="term-name">Terminal</span>
-            <button onclick="copyCmd()" class="ml-auto text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-500 rounded-md px-3 py-1 transition-colors">
+            <span class="ml-2 text-xs text-slate-400" id="term-name">Terminal</span>
+            <button onclick="copyCmd()" class="ml-auto text-xs font-medium text-white bg-navy hover:bg-navy-dark rounded-md px-3 py-1 transition-colors">
               <span id="copy-label" data-i18n="copy">Copy</span>
             </button>
           </div>
           <div class="p-4 flex gap-2">
-            <span class="text-emerald-400 select-none" id="prompt-char">$</span>
-            <pre class="cmd overflow-x-auto text-slate-200 whitespace-pre-wrap break-all flex-1"><code id="cmd"></code></pre>
+            <span class="text-[#5eead4] select-none" id="prompt-char">$</span>
+            <pre class="cmd overflow-x-auto text-slate-100 whitespace-pre-wrap break-all flex-1"><code id="cmd"></code></pre>
           </div>
         </div>
 
-        <div class="mt-4 p-5 rounded-xl bg-slate-800/50 border border-slate-700">
-          <p class="text-sm text-slate-300" data-i18n="s4_pw"></p>
+        <div class="mt-4 p-5 rounded-xl bg-surface border border-slate-200">
+          <p class="text-sm text-slate-600" data-i18n="s4_pw"></p>
         </div>
       </section>
 
@@ -190,27 +208,27 @@
       <section class="step" data-step>
         <div class="text-center mb-8">
           <div class="flex justify-center mb-4 text-6xl">✅</div>
-          <h1 class="text-3xl font-bold text-white mb-3" data-i18n="s5_title">That's it — you're set up!</h1>
-          <p class="text-lg text-slate-300" data-i18n="s5_lead">A test page prints automatically to confirm it works.</p>
+          <h1 class="font-head text-3xl font-extrabold text-navy mb-3" data-i18n="s5_title">That's it — you're set up!</h1>
+          <p class="text-lg text-slate-600" data-i18n="s5_lead">A test page prints automatically to confirm it works.</p>
         </div>
-        <div class="p-6 rounded-xl bg-gradient-to-br from-emerald-500/10 to-teal-500/10 border border-emerald-500/20 mb-6">
-          <h2 class="text-sm font-semibold text-white mb-2" data-i18n="s5_card_t">From now on</h2>
-          <p class="text-slate-300 text-sm" data-i18n="s5_card_d"></p>
+        <div class="p-6 rounded-xl bg-teal/5 border border-teal/20 mb-6">
+          <h2 class="font-head text-sm font-bold text-navy mb-2 uppercase tracking-wide" data-i18n="s5_card_t">From now on</h2>
+          <p class="text-slate-600 text-sm" data-i18n="s5_card_d"></p>
         </div>
 
-        <h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wide mb-3" data-i18n="faq_title">If something goes wrong</h3>
+        <h3 class="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3" data-i18n="faq_title">If something goes wrong</h3>
         <div class="space-y-2">
-          <details class="group bg-slate-800/50 rounded-xl border border-slate-700 p-4">
-            <summary class="cursor-pointer font-medium text-slate-200" data-i18n="faq1_q">"can't reach the printer"</summary>
-            <p class="text-sm text-slate-400 mt-2" data-i18n="faq1_a"></p>
+          <details class="group bg-white rounded-xl border border-slate-200 p-4">
+            <summary class="cursor-pointer font-medium text-ink" data-i18n="faq1_q">"can't reach the printer"</summary>
+            <p class="text-sm text-slate-600 mt-2" data-i18n="faq1_a"></p>
           </details>
-          <details class="group bg-slate-800/50 rounded-xl border border-slate-700 p-4">
-            <summary class="cursor-pointer font-medium text-slate-200" data-i18n="faq2_q">It printed nothing, or "Login Error"</summary>
-            <p class="text-sm text-slate-400 mt-2" data-i18n="faq2_a"></p>
+          <details class="group bg-white rounded-xl border border-slate-200 p-4">
+            <summary class="cursor-pointer font-medium text-ink" data-i18n="faq2_q">It printed nothing, or "Login Error"</summary>
+            <p class="text-sm text-slate-600 mt-2" data-i18n="faq2_a"></p>
           </details>
-          <details class="group bg-slate-800/50 rounded-xl border border-slate-700 p-4">
-            <summary class="cursor-pointer font-medium text-slate-200" data-i18n="faq3_q">Nothing happens after I paste</summary>
-            <p class="text-sm text-slate-400 mt-2" data-i18n="faq3_a"></p>
+          <details class="group bg-white rounded-xl border border-slate-200 p-4">
+            <summary class="cursor-pointer font-medium text-ink" data-i18n="faq3_q">Nothing happens after I paste</summary>
+            <p class="text-sm text-slate-600 mt-2" data-i18n="faq3_a"></p>
           </details>
         </div>
       </section>
@@ -220,26 +238,32 @@
     <!-- nav -->
     <nav class="flex items-center justify-between">
       <button id="btn-back" onclick="go(-1)"
-        class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-slate-300 bg-slate-800 border border-slate-700 hover:bg-slate-700 hover:text-white transition-colors">
+        class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-slate-600 bg-white border border-slate-300 hover:bg-slate-50 hover:text-navy transition-colors">
         <span aria-hidden="true">←</span> <span data-i18n="back">Back</span>
       </button>
-      <button id="btn-next" onclick="go(1)"
-        class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-white bg-indigo-600 hover:bg-indigo-500 transition-colors font-medium">
-        <span id="next-label">Next</span> <span aria-hidden="true">→</span>
-      </button>
+      <div class="flex items-center gap-2">
+        <button id="btn-restart" onclick="restart()"
+          class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-white bg-navy hover:bg-navy-dark transition-colors font-medium" style="display:none">
+          <span aria-hidden="true">↺</span> <span data-i18n="start_over">Start over</span>
+        </button>
+        <button id="btn-next" onclick="go(1)"
+          class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-white bg-navy hover:bg-navy-dark transition-colors font-medium">
+          <span id="next-label">Next</span> <span aria-hidden="true">→</span>
+        </button>
+      </div>
     </nav>
 
   </div>
 </main>
 
-<footer class="text-center text-xs text-slate-600 pb-6">
-  <span data-i18n="footer">Internal tool · Olivetti MF224 / Konica Minolta bizhub C250i</span>
+<footer class="text-center text-xs text-slate-400 pb-6">
+  <span data-i18n="footer">ROOM Business Center · Olivetti MF224 / Konica Minolta bizhub C250i</span>
 </footer>
 
 <script>
 // ---- config -----------------------------------------------------------------
-const MAC_INSTALL_URL = "https://printer.bernting.se/install.sh";
-const WIN_INSTALL_URL = "https://printer.bernting.se/install.ps1";
+const MAC_INSTALL_URL = "https://pages.bernting.se/printer-mac-setup/install.sh";
+const WIN_INSTALL_URL = "https://pages.bernting.se/printer-mac-setup/install.ps1";
 const TOTAL = 5;
 let current = 0;
 
@@ -247,8 +271,8 @@ let current = 0;
 // Keys are looked up os-first: t('s3_title') tries `<os>_s3_title` then `s3_title`.
 const I18N = {
   en: {
-    brand:"Office Printer Setup",
-    stepfmt:"Step {n} of {t}", back:"Back", next:"Next", lets_go:"Let's go", finish:"Done",
+    brand:"Printer Setup",
+    stepfmt:"Step {n} of {t}", back:"Back", next:"Next", lets_go:"Let's go", finish:"Done", start_over:"Start over",
     copy:"Copy", copied:"Copied!",
     s1_title:"Let's add the office printer",
     s1_lead:"We'll do it together, step by step. Everything is copy-and-paste — no experience needed.",
@@ -261,31 +285,31 @@ const I18N = {
     mac_s2_desc:"The same username and PIN you use at the printer panel. This stays in your browser — it's only used to build your command. Nothing is sent anywhere.",
     win_s2_desc:"On Windows the installer asks for these in the PowerShell window — there's nothing to type here. Just have them ready.",
     s2_user:"Username", s2_pin:"PIN",
-    win_s2_wininfo:"When you run the command in the next steps, a window will ask for your <strong class=\"text-white\">initials</strong> and <strong class=\"text-white\">4-digit PIN</strong> — the same ones you use at the printer. Have them ready.",
-    mac_s2_note:"<strong class=\"text-slate-200\">Don't know your login?</strong> It's the username and PIN you tap in at the printer to release your prints. Ask the office if you've never set one up.",
-    win_s2_note:"<strong class=\"text-slate-200\">Don't know your login?</strong> It's the initials and 4-digit PIN registered for you in the printer's web page. Ask the office if you've never set one up.",
+    win_s2_wininfo:"When you run the command in the next steps, a window will ask for your <strong class=\"text-navy\">initials</strong> and <strong class=\"text-navy\">4-digit PIN</strong> — the same ones you use at the printer. Have them ready.",
+    mac_s2_note:"<strong class=\"text-navy\">Don't know your login?</strong> It's the username and PIN you tap in at the printer to release your prints. Ask the office if you've never set one up.",
+    win_s2_note:"<strong class=\"text-navy\">Don't know your login?</strong> It's the initials and 4-digit PIN registered for you in the printer's web page. Ask the office if you've never set one up.",
 
     mac_s3_title:"Open the Terminal app", win_s3_title:"Open Windows PowerShell",
     mac_s3_desc:"Terminal is a small app already on your Mac that lets you type instructions. If this looks unfamiliar, that's completely normal.",
     win_s3_desc:"PowerShell is a small app already on Windows that lets you type instructions. If this looks unfamiliar, that's completely normal.",
-    mac_s3_press:"Press these two keys at the same time <span class=\"text-slate-500 text-sm block mt-1\">(or click them here)</span>",
-    win_s3_press:"Press the Windows key <span class=\"text-slate-500 text-sm block mt-1\">(or click it here)</span>",
+    mac_s3_press:"Press these two keys at the same time <span class=\"text-slate-400 text-sm block mt-1\">(or click them here)</span>",
+    win_s3_press:"Press the Windows key <span class=\"text-slate-400 text-sm block mt-1\">(or click it here)</span>",
     mac_s3_type:"A search bar will appear. Type:", win_s3_type:"The Start menu opens. Type:",
-    s3_enter:"Then press <kbd class=\"px-2 py-0.5 rounded bg-slate-700 border border-slate-600 text-sm text-white\">Enter</kbd>",
+    s3_enter:"Then press <kbd class=\"px-2 py-0.5 rounded bg-slate-100 border border-slate-300 text-sm text-ink\">Enter</kbd>",
     mac_s3_black:"A black window will appear. That's Terminal. Leave it open — you'll use it in the next step.",
     win_s3_black:"A blue window will appear. That's PowerShell. Leave it open — you'll use it in the next step.",
 
     s4_title:"Paste this line and press Enter",
-    mac_s4_desc:"Click into the black Terminal window, paste the line below (<kbd class=\"px-2 py-0.5 rounded bg-slate-700 border border-slate-600 text-xs text-white\">⌘V</kbd>), and press <kbd class=\"px-2 py-0.5 rounded bg-slate-700 border border-slate-600 text-xs text-white\">Enter</kbd>.",
-    win_s4_desc:"Click into the blue PowerShell window, paste the line below (<kbd class=\"px-2 py-0.5 rounded bg-slate-700 border border-slate-600 text-xs text-white\">Ctrl+V</kbd>), and press <kbd class=\"px-2 py-0.5 rounded bg-slate-700 border border-slate-600 text-xs text-white\">Enter</kbd>.",
-    mac_s4_pw:"<strong class=\"text-white\">You'll be asked for your Mac password</strong> (the one you use to log in to your Mac) so it can install the printer. Type it and press Enter — the dots won't show as you type, that's normal.",
-    win_s4_pw:"<strong class=\"text-white\">Windows will pop up a \"Yes / No\" prompt</strong> asking for permission — click <strong class=\"text-white\">Yes</strong>. A new window opens and asks for your initials and PIN. Type them and press Enter after each.",
+    mac_s4_desc:"Click into the black Terminal window, paste the line below (<kbd class=\"px-2 py-0.5 rounded bg-slate-100 border border-slate-300 text-xs text-ink\">⌘V</kbd>), and press <kbd class=\"px-2 py-0.5 rounded bg-slate-100 border border-slate-300 text-xs text-ink\">Enter</kbd>.",
+    win_s4_desc:"Click into the blue PowerShell window, paste the line below (<kbd class=\"px-2 py-0.5 rounded bg-slate-100 border border-slate-300 text-xs text-ink\">Ctrl+V</kbd>), and press <kbd class=\"px-2 py-0.5 rounded bg-slate-100 border border-slate-300 text-xs text-ink\">Enter</kbd>.",
+    mac_s4_pw:"<strong class=\"text-navy\">You'll be asked for your Mac password</strong> (the one you use to log in to your Mac) so it can install the printer. Type it and press Enter — the dots won't show as you type, that's normal.",
+    win_s4_pw:"<strong class=\"text-navy\">Windows will pop up a \"Yes / No\" prompt</strong> asking for permission — click <strong class=\"text-navy\">Yes</strong>. A new window opens and asks for your initials and PIN. Type them and press Enter after each.",
 
     s5_title:"That's it — you're set up!",
     s5_lead:"A test page prints automatically to confirm it works.",
     s5_card_t:"From now on",
-    mac_s5_card_d:"Print from any app with <kbd class=\"px-2 py-0.5 rounded bg-slate-700 border border-slate-600 text-xs text-white\">⌘P</kbd> and choose <strong class=\"text-white\">Olivetti_MF224</strong>. No login needed at the printer — your prints are already tagged with your account.",
-    win_s5_card_d:"Print from any app with <kbd class=\"px-2 py-0.5 rounded bg-slate-700 border border-slate-600 text-xs text-white\">Ctrl+P</kbd> and choose <strong class=\"text-white\">Room Skrivare - Olivetti MF224</strong>. No login needed at the printer — your prints are already tagged with your account.",
+    mac_s5_card_d:"Print from any app with <kbd class=\"px-2 py-0.5 rounded bg-slate-100 border border-slate-300 text-xs text-ink\">⌘P</kbd> and choose <strong class=\"text-navy\">Olivetti_MF224</strong>. No login needed at the printer — your prints are already tagged with your account.",
+    win_s5_card_d:"Print from any app with <kbd class=\"px-2 py-0.5 rounded bg-slate-100 border border-slate-300 text-xs text-ink\">Ctrl+P</kbd> and choose <strong class=\"text-navy\">Room Skrivare - Olivetti MF224</strong>. No login needed at the printer — your prints are already tagged with your account.",
 
     faq_title:"If something goes wrong",
     faq1_q:"\"can't reach the printer\"",
@@ -296,11 +320,11 @@ const I18N = {
     mac_faq3_q:"Nothing happens after I paste", win_faq3_q:"\"running scripts is disabled\" or nothing happens",
     mac_faq3_a:"Click the Terminal window first so it's in focus, then paste (⌘V) and press Enter.",
     win_faq3_a:"Click the PowerShell window first, then paste (Ctrl+V) and press Enter. If it mentions an execution policy, you can ignore it — the one-liner runs without one.",
-    footer:"Internal tool · Olivetti MF224 / Konica Minolta bizhub C250i",
+    footer:"ROOM Business Center · Olivetti MF224 / Konica Minolta bizhub C250i",
   },
   sv: {
     brand:"Skrivarinstallation",
-    stepfmt:"Steg {n} av {t}", back:"Tillbaka", next:"Nästa", lets_go:"Sätt igång", finish:"Klart",
+    stepfmt:"Steg {n} av {t}", back:"Tillbaka", next:"Nästa", lets_go:"Sätt igång", finish:"Klart", start_over:"Börja om",
     copy:"Kopiera", copied:"Kopierat!",
     s1_title:"Nu lägger vi till kontorsskrivaren",
     s1_lead:"Vi gör det tillsammans, steg för steg. Allt är klipp-och-klistra — ingen vana behövs.",
@@ -313,31 +337,31 @@ const I18N = {
     mac_s2_desc:"Samma användarnamn och PIN som du använder vid skrivaren. Det stannar i din webbläsare — det används bara för att bygga ditt kommando. Inget skickas någonstans.",
     win_s2_desc:"På Windows frågar installeraren efter dessa i PowerShell-fönstret — det finns inget att skriva här. Ha dem bara redo.",
     s2_user:"Användarnamn", s2_pin:"PIN",
-    win_s2_wininfo:"När du kör kommandot i nästa steg frågar ett fönster efter dina <strong class=\"text-white\">initialer</strong> och din <strong class=\"text-white\">4-siffriga PIN</strong> — samma som vid skrivaren. Ha dem redo.",
-    mac_s2_note:"<strong class=\"text-slate-200\">Vet du inte din inloggning?</strong> Det är användarnamnet och PIN-koden du knappar in vid skrivaren för att hämta dina utskrifter. Fråga kontoret om du aldrig skapat en.",
-    win_s2_note:"<strong class=\"text-slate-200\">Vet du inte din inloggning?</strong> Det är initialerna och den 4-siffriga PIN-koden som registrerats för dig i skrivarens webbsida. Fråga kontoret om du aldrig skapat en.",
+    win_s2_wininfo:"När du kör kommandot i nästa steg frågar ett fönster efter dina <strong class=\"text-navy\">initialer</strong> och din <strong class=\"text-navy\">4-siffriga PIN</strong> — samma som vid skrivaren. Ha dem redo.",
+    mac_s2_note:"<strong class=\"text-navy\">Vet du inte din inloggning?</strong> Det är användarnamnet och PIN-koden du knappar in vid skrivaren för att hämta dina utskrifter. Fråga kontoret om du aldrig skapat en.",
+    win_s2_note:"<strong class=\"text-navy\">Vet du inte din inloggning?</strong> Det är initialerna och den 4-siffriga PIN-koden som registrerats för dig i skrivarens webbsida. Fråga kontoret om du aldrig skapat en.",
 
     mac_s3_title:"Öppna appen Terminal", win_s3_title:"Öppna Windows PowerShell",
     mac_s3_desc:"Terminal är en liten app som redan finns på din Mac där du kan skriva instruktioner. Känns det obekant så är det helt normalt.",
     win_s3_desc:"PowerShell är en liten app som redan finns i Windows där du kan skriva instruktioner. Känns det obekant så är det helt normalt.",
-    mac_s3_press:"Tryck på de här två tangenterna samtidigt <span class=\"text-slate-500 text-sm block mt-1\">(eller klicka på dem här)</span>",
-    win_s3_press:"Tryck på Windows-tangenten <span class=\"text-slate-500 text-sm block mt-1\">(eller klicka på den här)</span>",
+    mac_s3_press:"Tryck på de här två tangenterna samtidigt <span class=\"text-slate-400 text-sm block mt-1\">(eller klicka på dem här)</span>",
+    win_s3_press:"Tryck på Windows-tangenten <span class=\"text-slate-400 text-sm block mt-1\">(eller klicka på den här)</span>",
     mac_s3_type:"En sökruta dyker upp. Skriv:", win_s3_type:"Startmenyn öppnas. Skriv:",
-    s3_enter:"Tryck sedan <kbd class=\"px-2 py-0.5 rounded bg-slate-700 border border-slate-600 text-sm text-white\">Retur</kbd>",
+    s3_enter:"Tryck sedan <kbd class=\"px-2 py-0.5 rounded bg-slate-100 border border-slate-300 text-sm text-ink\">Retur</kbd>",
     mac_s3_black:"Ett svart fönster dyker upp. Det är Terminal. Lämna det öppet — du använder det i nästa steg.",
     win_s3_black:"Ett blått fönster dyker upp. Det är PowerShell. Lämna det öppet — du använder det i nästa steg.",
 
     s4_title:"Klistra in raden och tryck Retur",
-    mac_s4_desc:"Klicka i det svarta Terminal-fönstret, klistra in raden nedan (<kbd class=\"px-2 py-0.5 rounded bg-slate-700 border border-slate-600 text-xs text-white\">⌘V</kbd>) och tryck <kbd class=\"px-2 py-0.5 rounded bg-slate-700 border border-slate-600 text-xs text-white\">Retur</kbd>.",
-    win_s4_desc:"Klicka i det blå PowerShell-fönstret, klistra in raden nedan (<kbd class=\"px-2 py-0.5 rounded bg-slate-700 border border-slate-600 text-xs text-white\">Ctrl+V</kbd>) och tryck <kbd class=\"px-2 py-0.5 rounded bg-slate-700 border border-slate-600 text-xs text-white\">Retur</kbd>.",
-    mac_s4_pw:"<strong class=\"text-white\">Du blir ombedd att ange ditt Mac-lösenord</strong> (det du loggar in på din Mac med) för att installera skrivaren. Skriv det och tryck Retur — prickarna syns inte medan du skriver, det är normalt.",
-    win_s4_pw:"<strong class=\"text-white\">Windows visar en \"Ja / Nej\"-ruta</strong> som ber om tillåtelse — klicka <strong class=\"text-white\">Ja</strong>. Ett nytt fönster öppnas och frågar efter dina initialer och PIN. Skriv dem och tryck Retur efter varje.",
+    mac_s4_desc:"Klicka i det svarta Terminal-fönstret, klistra in raden nedan (<kbd class=\"px-2 py-0.5 rounded bg-slate-100 border border-slate-300 text-xs text-ink\">⌘V</kbd>) och tryck <kbd class=\"px-2 py-0.5 rounded bg-slate-100 border border-slate-300 text-xs text-ink\">Retur</kbd>.",
+    win_s4_desc:"Klicka i det blå PowerShell-fönstret, klistra in raden nedan (<kbd class=\"px-2 py-0.5 rounded bg-slate-100 border border-slate-300 text-xs text-ink\">Ctrl+V</kbd>) och tryck <kbd class=\"px-2 py-0.5 rounded bg-slate-100 border border-slate-300 text-xs text-ink\">Retur</kbd>.",
+    mac_s4_pw:"<strong class=\"text-navy\">Du blir ombedd att ange ditt Mac-lösenord</strong> (det du loggar in på din Mac med) för att installera skrivaren. Skriv det och tryck Retur — prickarna syns inte medan du skriver, det är normalt.",
+    win_s4_pw:"<strong class=\"text-navy\">Windows visar en \"Ja / Nej\"-ruta</strong> som ber om tillåtelse — klicka <strong class=\"text-navy\">Ja</strong>. Ett nytt fönster öppnas och frågar efter dina initialer och PIN. Skriv dem och tryck Retur efter varje.",
 
     s5_title:"Klart — allt är inställt!",
     s5_lead:"En testsida skrivs ut automatiskt för att bekräfta att det fungerar.",
     s5_card_t:"Från och med nu",
-    mac_s5_card_d:"Skriv ut från valfri app med <kbd class=\"px-2 py-0.5 rounded bg-slate-700 border border-slate-600 text-xs text-white\">⌘P</kbd> och välj <strong class=\"text-white\">Olivetti_MF224</strong>. Ingen inloggning behövs vid skrivaren — dina utskrifter är redan märkta med ditt konto.",
-    win_s5_card_d:"Skriv ut från valfri app med <kbd class=\"px-2 py-0.5 rounded bg-slate-700 border border-slate-600 text-xs text-white\">Ctrl+P</kbd> och välj <strong class=\"text-white\">Room Skrivare - Olivetti MF224</strong>. Ingen inloggning behövs vid skrivaren — dina utskrifter är redan märkta med ditt konto.",
+    mac_s5_card_d:"Skriv ut från valfri app med <kbd class=\"px-2 py-0.5 rounded bg-slate-100 border border-slate-300 text-xs text-ink\">⌘P</kbd> och välj <strong class=\"text-navy\">Olivetti_MF224</strong>. Ingen inloggning behövs vid skrivaren — dina utskrifter är redan märkta med ditt konto.",
+    win_s5_card_d:"Skriv ut från valfri app med <kbd class=\"px-2 py-0.5 rounded bg-slate-100 border border-slate-300 text-xs text-ink\">Ctrl+P</kbd> och välj <strong class=\"text-navy\">Room Skrivare - Olivetti MF224</strong>. Ingen inloggning behövs vid skrivaren — dina utskrifter är redan märkta med ditt konto.",
 
     faq_title:"Om något går fel",
     faq1_q:"\"can't reach the printer\"",
@@ -348,7 +372,7 @@ const I18N = {
     mac_faq3_q:"Inget händer efter att jag klistrat in", win_faq3_q:"\"körning av skript är inaktiverat\" eller inget händer",
     mac_faq3_a:"Klicka först i Terminal-fönstret så det är aktivt, klistra sedan in (⌘V) och tryck Retur.",
     win_faq3_a:"Klicka först i PowerShell-fönstret, klistra sedan in (Ctrl+V) och tryck Retur. Nämns en \"execution policy\" kan du strunta i det — enradskommandot körs ändå.",
-    footer:"Internt verktyg · Olivetti MF224 / Konica Minolta bizhub C250i",
+    footer:"ROOM Business Center · Olivetti MF224 / Konica Minolta bizhub C250i",
   }
 };
 
@@ -415,15 +439,22 @@ function render(){
   document.getElementById('btn-back').style.visibility = current===0 ? 'hidden' : 'visible';
   const nl = document.getElementById('next-label');
   const nextBtn = document.getElementById('btn-next');
+  const restartBtn = document.getElementById('btn-restart');
   if (current === 0) nl.textContent = I18N[lang].lets_go;
   else nl.textContent = I18N[lang].next;
-  nextBtn.style.visibility = (current === TOTAL-1) ? 'hidden' : 'visible';
+  const last = (current === TOTAL-1);
+  nextBtn.style.display = last ? 'none' : 'inline-flex';
+  restartBtn.style.display = last ? 'inline-flex' : 'none';
   window.scrollTo({top:0, behavior:'smooth'});
 }
 function go(dir){
   const n = current + dir;
   if (n < 0 || n > TOTAL-1) return;
   current = n;
+  render();
+}
+function restart(){
+  current = 0;
   render();
 }
 
@@ -448,8 +479,8 @@ function setLang(l){
   lang = l;
   document.documentElement.lang = l;
   applyText();
-  document.getElementById('lang-en').className = "px-2.5 py-1 rounded-md font-medium " + (l==='en'?'bg-indigo-600 text-white':'text-slate-400 hover:text-slate-200');
-  document.getElementById('lang-sv').className = "px-2.5 py-1 rounded-md font-medium " + (l==='sv'?'bg-indigo-600 text-white':'text-slate-400 hover:text-slate-200');
+  document.getElementById('lang-en').className = "px-2.5 py-1 rounded-md font-medium " + (l==='en'?'bg-navy text-white':'text-slate-500 hover:text-navy');
+  document.getElementById('lang-sv').className = "px-2.5 py-1 rounded-md font-medium " + (l==='sv'?'bg-navy text-white':'text-slate-500 hover:text-navy');
   rebuild();
   render();
 }
@@ -457,8 +488,8 @@ function setOS(o){
   os = o;
   applyOsVisibility();
   applyText();
-  document.getElementById('os-mac').className = "px-3 py-1 rounded-md font-medium transition-colors " + (o==='mac'?'bg-indigo-600 text-white':'text-slate-400 hover:text-slate-200');
-  document.getElementById('os-win').className = "px-3 py-1 rounded-md font-medium transition-colors " + (o==='win'?'bg-indigo-600 text-white':'text-slate-400 hover:text-slate-200');
+  document.getElementById('os-mac').className = "px-3 py-1 rounded-md font-medium transition-colors " + (o==='mac'?'bg-navy text-white':'text-slate-500 hover:text-navy');
+  document.getElementById('os-win').className = "px-3 py-1 rounded-md font-medium transition-colors " + (o==='win'?'bg-navy text-white':'text-slate-500 hover:text-navy');
   rebuild();
   render();
 }

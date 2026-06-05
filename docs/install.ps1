@@ -1,7 +1,7 @@
 # One-shot office-printer installer for Windows, designed to run straight from
 # the web with nothing to download by hand:
 #
-#   irm https://printer.bernting.se/install.ps1 | iex
+#   irm https://pages.bernting.se/printer-mac-setup/install.ps1 | iex
 #
 # It installs the Olivetti d-Copia MF224 / Konica Minolta bizhub C250i
 # (192.168.9.15) with per-user authentication that actually works. Windows
@@ -29,7 +29,7 @@ param(
 )
 
 # ---- CONFIG (edit to match where the files are hosted) ----------------------
-$Site      = if ($env:PRINTER_SITE)       { $env:PRINTER_SITE }       else { "https://printer.bernting.se" }
+$Site      = if ($env:PRINTER_SITE)       { $env:PRINTER_SITE }       else { "https://pages.bernting.se/printer-mac-setup" }
 $ScriptUrl = if ($env:PRINTER_SCRIPT_URL) { $env:PRINTER_SCRIPT_URL } else { "$Site/install.ps1" }
 $DriverUrl = if ($env:PRINTER_DRIVER_URL) { $env:PRINTER_DRIVER_URL } else { "$Site/printer-driver-win-x64.zip" }
 $DriverInf = "KOAWNAA_.inf"                       # INF at the root of the zip

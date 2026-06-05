@@ -46,7 +46,7 @@ in the header lets users switch manually.
    `WIN_INSTALL_URL`), `SITE` in `install.sh`, and `$Site` in `install.ps1` to the
    `…github.io/<repo>` URL.
 
-4. **Share the link.** Send people to `https://printer.bernting.se`. That's it.
+4. **Share the link.** Send people to `https://pages.bernting.se/printer-mac-setup`. That's it.
 
 ## Updating later
 
