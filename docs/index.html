@@ -113,7 +113,7 @@
 
       <!-- STEP 1 — welcome -->
       <section class="step active" data-step>
-        <div class="text-center mb-8">
+        <div class="text-center">
           <div class="flex justify-center mb-5">
             <span class="w-16 h-16 rounded-2xl bg-navy/5 grid place-items-center">
               <svg viewBox="0 0 24 24" fill="none" stroke="#1E3A5F" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8">
@@ -121,18 +121,8 @@
               </svg>
             </span>
           </div>
-          <h1 class="font-head text-3xl font-extrabold text-navy mb-3" data-i18n="s1_title">Add the office printer</h1>
-          <p class="text-lg text-slate-600" data-i18n="s1_lead">
-            Five short steps, all copy and paste. No technical know-how needed.
-          </p>
+          <h1 class="font-head text-3xl font-extrabold text-navy" data-i18n="s1_title">Add the office printer</h1>
         </div>
-        <div class="p-6 rounded-xl bg-teal/5 border border-teal/20 mb-6">
-          <h2 class="font-head text-lg font-bold text-navy mb-2" data-i18n="s1_card_t">How it works</h2>
-          <p class="text-slate-600 text-sm" data-i18n="s1_card_d"></p>
-        </div>
-        <p class="text-sm text-slate-500 text-center" data-i18n="s1_foot">
-          About two minutes. You can close this window any time; nothing breaks.
-        </p>
       </section>
 
       <!-- STEP 2 — login -->
@@ -271,16 +261,16 @@
     <!-- nav -->
     <nav class="flex items-center justify-between">
       <button id="btn-back" onclick="go(-1)"
-        class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-slate-600 bg-white border border-slate-300 hover:bg-slate-50 hover:text-navy transition-colors">
+        class="inline-flex items-center justify-center gap-2 min-w-[150px] px-5 py-2.5 rounded-lg text-slate-600 bg-white border border-slate-300 hover:bg-slate-50 hover:text-navy transition-colors">
         <span aria-hidden="true">←</span> <span data-i18n="back">Back</span>
       </button>
       <div class="flex items-center gap-2">
         <button id="btn-restart" onclick="restart()"
-          class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-white bg-navy hover:bg-navy-dark transition-colors font-medium" style="display:none">
+          class="inline-flex items-center justify-center gap-2 min-w-[150px] px-5 py-2.5 rounded-lg text-white bg-navy hover:bg-navy-dark transition-colors font-medium" style="display:none">
           <span aria-hidden="true">↺</span> <span data-i18n="start_over">Start over</span>
         </button>
         <button id="btn-next" onclick="go(1)"
-          class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-white bg-navy hover:bg-navy-dark transition-colors font-medium">
+          class="inline-flex items-center justify-center gap-2 min-w-[150px] px-5 py-2.5 rounded-lg text-white bg-navy hover:bg-navy-dark transition-colors font-medium">
           <span id="next-label">Next</span> <span aria-hidden="true">→</span>
         </button>
       </div>
@@ -308,11 +298,6 @@ const I18N = {
     stepfmt:"Step {n} of {t}", back:"Back", next:"Next", lets_go:"Begin", finish:"Done", start_over:"Start over",
     copy:"Copy", copied:"Copied!",
     s1_title:"Add the office printer",
-    s1_lead:"Five steps, mostly copy and paste.",
-    s1_card_t:"How it works",
-    mac_s1_card_d:"Enter your login, open Terminal, paste one line. The printer installs with your login built in.",
-    win_s1_card_d:"Open PowerShell, paste one line. It installs the printer and asks for your login.",
-    s1_foot:"About two minutes.",
 
     mac_s2_title:"Your printer login", win_s2_title:"Have your login ready",
     mac_s2_desc:"Same username and PIN as at the printer. Stays in your browser.",
@@ -320,8 +305,8 @@ const I18N = {
     s2_user:"Username", s2_pin:"PIN",
     s2_winlabel:"Before you start",
     win_s2_wininfo:"A window will ask for your <strong class=\"text-navy\">initials</strong> and <strong class=\"text-navy\">4-digit PIN</strong>. Have them ready.",
-    mac_s2_note:"<strong class=\"text-navy\">Don't know it?</strong> It's your login at the printer. Ask the office.",
-    win_s2_note:"<strong class=\"text-navy\">Don't know it?</strong> It's your login at the printer. Ask the office.",
+    mac_s2_note:"<strong class=\"text-navy\">Don't know it?</strong> Ask whoever handles IT at the office; it might be William.",
+    win_s2_note:"<strong class=\"text-navy\">Don't know it?</strong> Ask whoever handles IT at the office; it might be William.",
 
     mac_s3_title:"Open Terminal", win_s3_title:"Open PowerShell",
     mac_s3_desc:"It's already on your Mac.",
@@ -361,11 +346,6 @@ const I18N = {
     stepfmt:"Steg {n} av {t}", back:"Tillbaka", next:"Nästa", lets_go:"Sätt igång", finish:"Klart", start_over:"Börja om",
     copy:"Kopiera", copied:"Kopierat!",
     s1_title:"Lägg till kontorsskrivaren",
-    s1_lead:"Fem steg, mest klipp och klistra.",
-    s1_card_t:"Så fungerar det",
-    mac_s1_card_d:"Ange din inloggning, öppna Terminal, klistra in en rad. Skrivaren installeras med din inloggning inbakad.",
-    win_s1_card_d:"Öppna PowerShell, klistra in en rad. Den installerar skrivaren och frågar efter din inloggning.",
-    s1_foot:"Ungefär två minuter.",
 
     mac_s2_title:"Din skrivarinloggning", win_s2_title:"Ha din inloggning redo",
     mac_s2_desc:"Samma användarnamn och PIN som vid skrivaren. Stannar i din webbläsare.",
@@ -373,8 +353,8 @@ const I18N = {
     s2_user:"Användarnamn", s2_pin:"PIN",
     s2_winlabel:"Innan du börjar",
     win_s2_wininfo:"Ett fönster frågar efter dina <strong class=\"text-navy\">initialer</strong> och din <strong class=\"text-navy\">4-siffriga PIN</strong>. Ha dem redo.",
-    mac_s2_note:"<strong class=\"text-navy\">Vet du inte?</strong> Det är din inloggning vid skrivaren. Fråga kontoret.",
-    win_s2_note:"<strong class=\"text-navy\">Vet du inte?</strong> Det är din inloggning vid skrivaren. Fråga kontoret.",
+    mac_s2_note:"<strong class=\"text-navy\">Vet du inte?</strong> Fråga IT-ansvarig på kontoret, eventuellt är det William.",
+    win_s2_note:"<strong class=\"text-navy\">Vet du inte?</strong> Fråga IT-ansvarig på kontoret, eventuellt är det William.",
 
     mac_s3_title:"Öppna Terminal", win_s3_title:"Öppna PowerShell",
     mac_s3_desc:"Den finns redan på din Mac.",
