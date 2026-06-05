@@ -115,8 +115,10 @@ Ok "registry fix applied (RpcAuthnLevelPrivacyEnabled = 0)"
 
 # 4) Store credentials in Windows Credential Manager.
 Info "storing your printer login..."
-cmd /c "cmdkey /delete:$PrinterIP" 2>$null | Out-Null
-$null = cmd /c "cmdkey /add:$PrinterIP /user:$Username /pass:$Password"
+# Call cmdkey.exe directly (not via cmd /c "...") so PowerShell handles argument
+# quoting — a username/PIN with a space or special char won't corrupt the entry.
+cmdkey /delete:$PrinterIP 2>$null | Out-Null
+$null = cmdkey /add:$PrinterIP /user:$Username /pass:$Password
 if ($LASTEXITCODE -ne 0) { Die "couldn't store the credentials (cmdkey failed)." }
 Ok "login stored for $PrinterIP (user: $Username)"
 
@@ -144,6 +146,12 @@ Ok "driver downloaded"
 # 7) Install the driver into the Windows driver store.
 Info "installing the Olivetti Universal PS driver..."
 $pnp = & pnputil.exe /add-driver "$inf" /install 2>&1
+# pnputil returns 0 (added), 259 (no new driver / already present), or 3010
+# (added, reboot required) on success-ish paths; anything else is worth flagging,
+# though Add-Printer below is the real gate.
+if ($LASTEXITCODE -notin 0, 259, 3010) {
+    Warn "pnputil returned $LASTEXITCODE while adding the driver; continuing."
+}
 Ok "driver installed in the driver store"
 
 # 8) Remove any existing queue/port with our name so we start clean.

@@ -21,7 +21,7 @@ All site files live under `docs/`.
 | `km9100auth` | The Perl CUPS backend the installer deploys (injects PJL auth, strips the `KMCOETYPE` line that breaks GUI prints). |
 | `km-c250i-driver.pkg` | The Konica Minolta C250i Mac driver (47 MB, signed by KM). Extracted from `IT6PSMACOS_536AMU.dmg`; installs the `KONICAMINOLTAC250i` PPD. |
 | **Windows** | |
-| `install.ps1` | The `irm … \| iex` installer. Self-elevates (UAC), prompts for initials + PIN, downloads the driver, applies the `RpcAuthnLevelPrivacyEnabled=0` registry fix + `cmdkey` credential + Olivetti PS driver. Source of truth: `printer-windows-setup/web_install.ps1`. |
+| `install.ps1` | The `irm … \| iex` installer. Self-elevates (UAC), prompts for initials + PIN, downloads the driver, applies the `RpcAuthnLevelPrivacyEnabled=0` registry fix + `cmdkey` credential + Olivetti PS driver. Original reference: `printer-windows-setup/web_install.ps1` (kept on disk only, gitignored). |
 | `printer-driver-win-x64.zip` | Olivetti Universal PS v3.9.12 driver, x64 only (52 MB). Zipped from `printer-windows-setup/GEUPDPSWin_3912040MU/driver/win_x64`; INF `KOAWNAA_.inf` at the zip root. Fetched at runtime by `install.ps1`. |
 
 ## One-time setup
@@ -40,12 +40,14 @@ All site files live under `docs/`.
    ```
    Repo → Settings → Pages → Source: *Deploy from a branch* → `main` / `/docs`.
 
-3. **Point the domain.** Add a DNS `CNAME` record for `printer.bernting.se` →
-   `<youruser>.github.io` (same pattern as `cc-onboarding-personas`). GitHub Pages
-   will issue HTTPS automatically. If you don't want a custom domain, delete
-   `docs/CNAME` and update the URLs in `index.html` (`MAC_INSTALL_URL` /
-   `WIN_INSTALL_URL`), `SITE` in `install.sh`, and `$Site` in `install.ps1` to the
-   `…github.io/<repo>` URL.
+3. **Serve it.** This repo deploys as a project site under the `pages.bernting.se`
+   GitHub user domain, so it's reachable at
+   `https://pages.bernting.se/room-business-center-skrivare` with no per-project
+   `CNAME` file. If you fork it elsewhere, the served URL becomes
+   `https://<youruser>.github.io/<repo>`; update it in the three places that
+   hardcode the origin: `MAC_INSTALL_URL` / `WIN_INSTALL_URL` in `index.html`,
+   `SITE` in `install.sh`, and `$Site` in `install.ps1` (each is also overridable
+   at runtime via the `PRINTER_SITE` env var).
 
 4. **Share the link.** Send people to `https://pages.bernting.se/room-business-center-skrivare`. That's it.
 
@@ -62,17 +64,18 @@ All site files live under `docs/`.
 
 ## Notes
 
-- **Mac:** the generated command contains the user's PIN by default (convenient).
-  Users who prefer not to can tick the box on the page; the installer then prompts
-  for the PIN in Terminal instead. `install.sh` also removes the no-auth
-  `_192_168_9_15`-style duplicate queue macOS auto-creates and sets
-  `Room_Business_Center_Olivetti_MF224` as the default — the two things that broke printing originally.
+- **Mac:** the generated command contains the user's PIN when one is entered
+  (convenient, but it lands in shell history). Leaving the PIN field blank omits
+  `-p` from the command, and `install.sh` prompts for the PIN in Terminal
+  instead. `install.sh` also removes the no-auth `_192_168_9_15`-style duplicate
+  queue macOS auto-creates and sets `Room_Business_Center_Olivetti_MF224` as the
+  default. Those are the two things that broke printing originally.
 - **Windows:** the `irm … | iex` one-liner never carries the PIN — `install.ps1`
   always prompts for initials + PIN inside the elevated PowerShell window. The
   three things it must do together (any one alone fails silently): the
   `RpcAuthnLevelPrivacyEnabled=0` registry fix, the `cmdkey` Credential Manager
   entry, and the official Olivetti PostScript driver. See
-  `printer-windows-setup/README.md` for the full background.
+  `printer-windows-setup/README.md` (local-only, gitignored) for the full background.
 - The Windows installer can't be run from this Mac (no Windows). It was written to
   mirror the field-tested `printer-windows-setup/auto_install_printer.ps1`
   step-for-step and passes a PowerShell AST parse; verify it on a real PC before

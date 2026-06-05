@@ -46,6 +46,10 @@ if ($device_uri =~ m{^[a-zA-Z0-9]+://(?:([^:@/]*)(?::([^@/]*))?@)?([^:/]+)(?::(\
 }
 $user = url_decode($user // "");
 $pass = url_decode($pass // "");
+# PJL SET values are double-quoted, so a literal quote or a CR/LF (or other
+# control char) in the credential would break the quoting or inject extra @PJL
+# lines. Strip those out before they reach the auth block.
+for ($user, $pass) { s/[\x00-\x1f"]//g; }
 $host //= "";
 $port //= 9100;
 if ($user eq "" || $pass eq "" || $host eq "") {

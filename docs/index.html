@@ -97,8 +97,8 @@
   <div class="flex items-center gap-3 text-sm">
     <!-- OS toggle -->
     <div class="flex rounded-lg bg-white border border-slate-200 p-0.5">
-      <button onclick="setOS('mac')" id="os-mac" class="px-3 py-1 rounded-md font-medium transition-colors">macOS</button>
-      <button onclick="setOS('win')" id="os-win" class="px-3 py-1 rounded-md font-medium transition-colors">Windows</button>
+      <button onclick="setOS('mac')" id="os-mac" aria-pressed="false" class="px-3 py-1 rounded-md font-medium transition-colors">macOS</button>
+      <button onclick="setOS('win')" id="os-win" aria-pressed="false" class="px-3 py-1 rounded-md font-medium transition-colors">Windows</button>
     </div>
     <!-- lang toggle (SVG flags) -->
     <div class="flex items-center gap-2">
@@ -129,7 +129,7 @@
       <div class="flex items-center text-sm text-slate-500 mb-2">
         <span id="step-label"></span>
       </div>
-      <div class="w-full h-1.5 bg-slate-200 rounded-full overflow-hidden">
+      <div id="progress-track" class="w-full h-1.5 bg-slate-200 rounded-full overflow-hidden" role="progressbar" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1">
         <div id="progress-bar" class="h-full bg-teal rounded-full transition-all duration-500" style="width:20%"></div>
       </div>
     </div>
@@ -166,7 +166,7 @@
             </label>
             <label class="block">
               <span class="text-xs font-medium text-slate-500" data-i18n="s2_pin">PIN</span>
-              <input id="f-pin" oninput="rebuild()" autocomplete="off" placeholder="e.g. 1234"
+              <input id="f-pin" oninput="rebuild()" autocomplete="off" inputmode="numeric" placeholder="e.g. 1234"
                 class="mt-1 w-full rounded-lg bg-white border border-slate-300 px-3 py-2.5 text-ink placeholder-slate-400 focus:border-navy focus:ring-2 focus:ring-navy/20 outline-none" />
             </label>
           </div>
@@ -330,8 +330,7 @@ const reduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced
 // Keys are looked up os-first: t('s3_title') tries `<os>_s3_title` then `s3_title`.
 const I18N = {
   en: {
-    brand:"Printer Setup",
-    stepfmt:"Step {n} of {t}", back:"Back", next:"Next", lets_go:"Begin", finish:"Done", start_over:"Start over",
+    stepfmt:"Step {n} of {t}", back:"Back", next:"Next", lets_go:"Begin", start_over:"Start over",
     copy:"Copy", copied:"Copied!",
     affirm:["Nice", "Good job", "Got it"],
     s1_title:"Add the office printer",
@@ -377,8 +376,7 @@ const I18N = {
     footer:"ROOM Business Center · Olivetti MF224",
   },
   sv: {
-    brand:"Skrivarinstallation",
-    stepfmt:"Steg {n} av {t}", back:"Tillbaka", next:"Nästa", lets_go:"Sätt igång", finish:"Klart", start_over:"Börja om",
+    stepfmt:"Steg {n} av {t}", back:"Tillbaka", next:"Nästa", lets_go:"Sätt igång", start_over:"Börja om",
     copy:"Kopiera", copied:"Kopierat!",
     affirm:["Snyggt", "Bra jobbat", "Klart"],
     s1_title:"Lägg till kontorsskrivaren",
@@ -529,6 +527,7 @@ function render(){
   animateStep = false;
   const pct = Math.round(((current+1)/TOTAL)*100);
   document.getElementById('progress-bar').style.width = pct + "%";
+  document.getElementById('progress-track').setAttribute('aria-valuenow', current+1);
   document.getElementById('step-label').textContent =
     I18N[lang].stepfmt.replace('{n}', current+1).replace('{t}', TOTAL);
   document.getElementById('btn-back').style.visibility = current===0 ? 'hidden' : 'visible';
@@ -597,6 +596,8 @@ function setOS(o){
   applyText();
   document.getElementById('os-mac').className = "px-3 py-1 rounded-md font-medium transition-colors " + (o==='mac'?'bg-navy text-white':'text-slate-500 hover:text-navy');
   document.getElementById('os-win').className = "px-3 py-1 rounded-md font-medium transition-colors " + (o==='win'?'bg-navy text-white':'text-slate-500 hover:text-navy');
+  document.getElementById('os-mac').setAttribute('aria-pressed', o==='mac');
+  document.getElementById('os-win').setAttribute('aria-pressed', o==='win');
   rebuild();
   render();
 }

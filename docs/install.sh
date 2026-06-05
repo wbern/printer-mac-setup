@@ -50,13 +50,21 @@ while [[ $# -gt 0 ]]; do
         -u|--user)     USER_NAME="${2:-}"; shift 2 ;;
         -p|--pin|--password) USER_PIN="${2:-}"; shift 2 ;;
         --no-test)     RUN_TEST=0; shift ;;
-        -h|--help)     sed -n '2,20p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
+        -h|--help)
+            printf 'Usage: install.sh [-u USER] [-p PIN] [--no-test]\n\n'
+            printf 'Installs the Room_Business_Center_Olivetti_MF224 printer with per-user\n'
+            printf 'authentication. With no -u/-p it prompts on the terminal.\n'
+            exit 0 ;;
         *) die "unknown argument: $1" ;;
     esac
 done
 
 [[ "$(uname)" == "Darwin" ]] || die "this installer is macOS-only"
 command -v perl >/dev/null 2>&1 || die "perl not found (unexpected on macOS)"
+
+# Single scratch dir for every download/temp file; cleaned up on any exit.
+WORKDIR="$(mktemp -d -t printer-setup)"
+trap 'rm -rf "$WORKDIR"' EXIT
 
 printf '\n%s  Office printer setup — Olivetti MF224%s\n\n' "$c_bold" "$c_off"
 
@@ -76,7 +84,7 @@ sudo -v || die "administrator access is required to install a printer"
 # 3) Driver / PPD — settle this BEFORE asking for credentials.
 if [[ ! -f "$PPD_GZ" ]]; then
     info "the Konica Minolta C250i driver isn't installed yet — fetching it (one-time)…"
-    tmp_pkg="$(mktemp -t kmdriver).pkg"
+    tmp_pkg="$WORKDIR/driver.pkg"
     if curl -fsSL "$DRIVER_URL" -o "$tmp_pkg" 2>/dev/null && [[ -s "$tmp_pkg" ]]; then
         info "installing driver…"
         sudo installer -pkg "$tmp_pkg" -target / >/dev/null || die "driver install failed"
@@ -114,7 +122,7 @@ fi
 
 # Backend.
 info "installing the print backend…"
-tmp_be="$(mktemp -t km9100auth)"
+tmp_be="$WORKDIR/km9100auth"
 curl -fsSL "$BACKEND_URL" -o "$tmp_be" || die "couldn't download the backend from $BACKEND_URL"
 perl -c "$tmp_be" >/dev/null 2>&1 || die "downloaded backend failed its self-check"
 sudo install -o root -g wheel -m 0500 "$tmp_be" "$BACKEND_DEST"
@@ -139,10 +147,12 @@ enc() { perl -MURI::Escape -e 'print uri_escape($ARGV[0], "^A-Za-z0-9")' "$1" 2>
         || perl -e 'my $s=$ARGV[0]; $s=~s/([^A-Za-z0-9])/sprintf("%%%02X",ord($1))/ge; print $s' "$1"; }
 DEVICE_URI="km9100auth://$(enc "$USER_NAME"):$(enc "$USER_PIN")@${PRINTER_HOST}:${PRINTER_PORT}"
 
-PPD_TMP="$(mktemp -t KMC250i).ppd"
-trap 'rm -f "$PPD_TMP"' EXIT
+PPD_TMP="$WORKDIR/KMC250i.ppd"
 gunzip -kc "$PPD_GZ" > "$PPD_TMP"
 
+# NB: these -o auth options are cosmetic (they set PPD defaults shown in the
+# print dialog). The auth that actually reaches the printer is the PJL block the
+# km9100auth backend injects — that backend is the source of truth, not these.
 sudo lpadmin -p "$QUEUE_NAME" -E -v "$DEVICE_URI" -P "$PPD_TMP" \
     -D "Room_Business_Center_Olivetti_MF224" -L "Office" \
     -o KMAuthentication=True -o UserType=Private \
@@ -155,7 +165,7 @@ ok "queue configured and set as your default printer"
 # Confirmation print (dependency-free; no SNMP).
 if [[ "$RUN_TEST" -eq 1 ]]; then
     info "sending a test page…"
-    test_ps="$(mktemp -t kmtest).ps"
+    test_ps="$WORKDIR/test.ps"
     cat > "$test_ps" <<EOF
 %!PS-Adobe-3.0
 /Helvetica findfont 18 scalefont setfont
