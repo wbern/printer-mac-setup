@@ -110,10 +110,6 @@
                 class="mt-1 w-full rounded-lg bg-slate-800 border border-slate-700 px-3 py-2.5 text-white placeholder-slate-500 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/30 outline-none" />
             </label>
           </div>
-          <label class="flex items-center gap-2.5 mt-4 text-sm text-slate-300 select-none cursor-pointer">
-            <input id="f-prompt" type="checkbox" onchange="rebuild()" class="rounded border-slate-600 bg-slate-800 text-indigo-500 focus:ring-indigo-500/30" />
-            <span data-i18n="s2_prompt">Don't put my PIN in the command — ask me for it in Terminal instead (more private)</span>
-          </label>
         </div>
 
         <!-- Windows: nothing to type here; the installer asks in PowerShell -->
@@ -183,10 +179,6 @@
             <span class="text-emerald-400 select-none" id="prompt-char">$</span>
             <pre class="cmd overflow-x-auto text-slate-200 whitespace-pre-wrap break-all flex-1"><code id="cmd"></code></pre>
           </div>
-        </div>
-
-        <div id="pin-warn" class="only-mac hidden mt-3 p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
-          <p class="text-sm text-amber-300/90" data-i18n="s4_pinwarn"></p>
         </div>
 
         <div class="mt-4 p-5 rounded-xl bg-slate-800/50 border border-slate-700">
@@ -269,7 +261,6 @@ const I18N = {
     mac_s2_desc:"The same username and PIN you use at the printer panel. This stays in your browser — it's only used to build your command. Nothing is sent anywhere.",
     win_s2_desc:"On Windows the installer asks for these in the PowerShell window — there's nothing to type here. Just have them ready.",
     s2_user:"Username", s2_pin:"PIN",
-    s2_prompt:"Don't put my PIN in the command — ask me for it in Terminal instead (more private)",
     win_s2_wininfo:"When you run the command in the next steps, a window will ask for your <strong class=\"text-white\">initials</strong> and <strong class=\"text-white\">4-digit PIN</strong> — the same ones you use at the printer. Have them ready.",
     mac_s2_note:"<strong class=\"text-slate-200\">Don't know your login?</strong> It's the username and PIN you tap in at the printer to release your prints. Ask the office if you've never set one up.",
     win_s2_note:"<strong class=\"text-slate-200\">Don't know your login?</strong> It's the initials and 4-digit PIN registered for you in the printer's web page. Ask the office if you've never set one up.",
@@ -287,7 +278,6 @@ const I18N = {
     s4_title:"Paste this line and press Enter",
     mac_s4_desc:"Click into the black Terminal window, paste the line below (<kbd class=\"px-2 py-0.5 rounded bg-slate-700 border border-slate-600 text-xs text-white\">⌘V</kbd>), and press <kbd class=\"px-2 py-0.5 rounded bg-slate-700 border border-slate-600 text-xs text-white\">Enter</kbd>.",
     win_s4_desc:"Click into the blue PowerShell window, paste the line below (<kbd class=\"px-2 py-0.5 rounded bg-slate-700 border border-slate-600 text-xs text-white\">Ctrl+V</kbd>), and press <kbd class=\"px-2 py-0.5 rounded bg-slate-700 border border-slate-600 text-xs text-white\">Enter</kbd>.",
-    s4_pinwarn:"⚠︎ This line contains your PIN. That's fine on your own Mac. Prefer to type it in Terminal? Go back to step 2 and tick the box.",
     mac_s4_pw:"<strong class=\"text-white\">You'll be asked for your Mac password</strong> (the one you use to log in to your Mac) so it can install the printer. Type it and press Enter — the dots won't show as you type, that's normal.",
     win_s4_pw:"<strong class=\"text-white\">Windows will pop up a \"Yes / No\" prompt</strong> asking for permission — click <strong class=\"text-white\">Yes</strong>. A new window opens and asks for your initials and PIN. Type them and press Enter after each.",
 
@@ -323,7 +313,6 @@ const I18N = {
     mac_s2_desc:"Samma användarnamn och PIN som du använder vid skrivaren. Det stannar i din webbläsare — det används bara för att bygga ditt kommando. Inget skickas någonstans.",
     win_s2_desc:"På Windows frågar installeraren efter dessa i PowerShell-fönstret — det finns inget att skriva här. Ha dem bara redo.",
     s2_user:"Användarnamn", s2_pin:"PIN",
-    s2_prompt:"Lägg inte min PIN i kommandot — fråga mig i Terminal istället (säkrare)",
     win_s2_wininfo:"När du kör kommandot i nästa steg frågar ett fönster efter dina <strong class=\"text-white\">initialer</strong> och din <strong class=\"text-white\">4-siffriga PIN</strong> — samma som vid skrivaren. Ha dem redo.",
     mac_s2_note:"<strong class=\"text-slate-200\">Vet du inte din inloggning?</strong> Det är användarnamnet och PIN-koden du knappar in vid skrivaren för att hämta dina utskrifter. Fråga kontoret om du aldrig skapat en.",
     win_s2_note:"<strong class=\"text-slate-200\">Vet du inte din inloggning?</strong> Det är initialerna och den 4-siffriga PIN-koden som registrerats för dig i skrivarens webbsida. Fråga kontoret om du aldrig skapat en.",
@@ -341,7 +330,6 @@ const I18N = {
     s4_title:"Klistra in raden och tryck Retur",
     mac_s4_desc:"Klicka i det svarta Terminal-fönstret, klistra in raden nedan (<kbd class=\"px-2 py-0.5 rounded bg-slate-700 border border-slate-600 text-xs text-white\">⌘V</kbd>) och tryck <kbd class=\"px-2 py-0.5 rounded bg-slate-700 border border-slate-600 text-xs text-white\">Retur</kbd>.",
     win_s4_desc:"Klicka i det blå PowerShell-fönstret, klistra in raden nedan (<kbd class=\"px-2 py-0.5 rounded bg-slate-700 border border-slate-600 text-xs text-white\">Ctrl+V</kbd>) och tryck <kbd class=\"px-2 py-0.5 rounded bg-slate-700 border border-slate-600 text-xs text-white\">Retur</kbd>.",
-    s4_pinwarn:"⚠︎ Raden innehåller din PIN. Det är ok på din egen Mac. Vill du hellre skriva den i Terminal? Gå tillbaka till steg 2 och kryssa i rutan.",
     mac_s4_pw:"<strong class=\"text-white\">Du blir ombedd att ange ditt Mac-lösenord</strong> (det du loggar in på din Mac med) för att installera skrivaren. Skriv det och tryck Retur — prickarna syns inte medan du skriver, det är normalt.",
     win_s4_pw:"<strong class=\"text-white\">Windows visar en \"Ja / Nej\"-ruta</strong> som ber om tillåtelse — klicka <strong class=\"text-white\">Ja</strong>. Ett nytt fönster öppnas och frågar efter dina initialer och PIN. Skriv dem och tryck Retur efter varje.",
 
@@ -374,20 +362,17 @@ function shquote(s){ return "'" + String(s).replace(/'/g, "'\\''") + "'"; }
 function rebuild(){
   if (os === 'win') {
     document.getElementById('cmd').textContent = `irm ${WIN_INSTALL_URL} | iex`;
-    document.getElementById('pin-warn').classList.add('hidden');
     return;
   }
   const user = (document.getElementById('f-user').value||"").trim();
   const pin  = (document.getElementById('f-pin').value||"").trim();
-  const promptInTerminal = document.getElementById('f-prompt').checked;
   let args = "";
   if (user) args += " -u " + shquote(user);
-  if (pin && !promptInTerminal) args += " -p " + shquote(pin);
+  if (pin)  args += " -p " + shquote(pin);
   const cmd = args
     ? `curl -fsSL ${MAC_INSTALL_URL} | bash -s --${args}`
     : `curl -fsSL ${MAC_INSTALL_URL} | bash`;
   document.getElementById('cmd').textContent = cmd;
-  document.getElementById('pin-warn').classList.toggle('hidden', !(pin && !promptInTerminal));
 }
 function copyCmd(){
   const text = document.getElementById('cmd').textContent;
