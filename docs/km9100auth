@@ -1,0 +1,126 @@
+#!/usr/bin/perl
+# CUPS backend that connects to a Konica Minolta bizhub on TCP:9100 and injects
+# the PJL user-authentication header the printer requires (User Authentication
+# enabled, AuthType=Device, PublicUser=false).
+#
+# Written in Perl on purpose: every macOS ships /usr/bin/perl, but a clean Mac
+# has NO python3 (only present with Xcode Command Line Tools). This backend must
+# run on any stock Mac, so it depends on nothing but core Perl.
+#
+# Device URI:  km9100auth://<user>:<password>@<host>[:port]
+#
+# It reads the CUPS-filtered job on stdin (or argv[5] file), finds the first
+# "@PJL JOB" the KM filter emitted, strips any stale auth SETs, and inserts our
+# real auth SET lines right after it. Everything else passes through untouched.
+#
+# IMPORTANT — KMCOETYPE: the macOS KM driver injects "@PJL SET KMCOETYPE = 2"
+# into GUI (Cmd+P / Chrome) jobs, which flips the bizhub into an auth/account-
+# track mode it then rejects as "Login Error" even with correct credentials.
+# We strip it so GUI jobs match the working CLI path. (Verified: identical job
+# WITH that line -> DENIED, WITHOUT -> OK.)
+
+use strict;
+use warnings;
+use IO::Socket::INET;
+
+# CUPS backend "discovery" mode: argv empty -> advertise ourselves and exit.
+if (@ARGV == 0) {
+    print qq(direct km9100auth "Unknown" "KM bizhub TCP/9100 with PJL auth"\n);
+    exit 0;
+}
+if (@ARGV < 5) {
+    print STDERR "ERROR: usage: km9100auth job-id user title copies options [file]\n";
+    exit 1;
+}
+
+my $device_uri = $ENV{DEVICE_URI} // "";
+if ($device_uri eq "") {
+    print STDERR "ERROR: DEVICE_URI not set\n";
+    exit 1;
+}
+
+# Parse km9100auth://user:pass@host:port  (percent-decode user & pass).
+my ($user, $pass, $host, $port);
+if ($device_uri =~ m{^[a-zA-Z0-9]+://(?:([^:@/]*)(?::([^@/]*))?@)?([^:/]+)(?::(\d+))?}) {
+    ($user, $pass, $host, $port) = ($1, $2, $3, $4);
+}
+$user = url_decode($user // "");
+$pass = url_decode($pass // "");
+$host //= "";
+$port //= 9100;
+if ($user eq "" || $pass eq "" || $host eq "") {
+    print STDERR "ERROR: need km9100auth://user:pass\@host  (got $device_uri)\n";
+    exit 1;
+}
+
+sub url_decode {
+    my ($s) = @_;
+    $s =~ s/\+/ /g;
+    $s =~ s/%([0-9A-Fa-f]{2})/chr(hex($1))/ge;
+    return $s;
+}
+
+# The auth SETs the bizhub needs, inserted right after @PJL JOB.
+my $auth_block =
+      "\@PJL SET BOXHOLDTYPE = PRIVATE\n"
+    . "\@PJL SET KMUSERNAME = \"$user\" \n"
+    . "\@PJL SET KMUSERKEY2 = \"$pass\" \n"
+    . "\@PJL SET KMCERTSERVTYPE = NUMBER\n"
+    . "\@PJL SET KMCERTSERVNUM = 101\n";
+
+# Read the whole job. PJL headers sit at the very front; office jobs fit easily
+# in memory, and slurping keeps the header rewrite simple and correct.
+my $src;
+if (@ARGV >= 6 && defined $ARGV[5] && $ARGV[5] ne "") {
+    open($src, "<:raw", $ARGV[5]) or do {
+        print STDERR "ERROR: cannot open $ARGV[5]: $!\n"; exit 1;
+    };
+} else {
+    $src = \*STDIN;
+    binmode($src);
+}
+my $data = do { local $/; <$src> };
+$data = "" unless defined $data;
+close($src) if $src != \*STDIN;
+
+# Strip stale auth SETs (incl. KMCOETYPE) the upstream filter may have emitted.
+my $strip = qr/^\@PJL SET (?:BOXHOLDTYPE|KMUSERNAME|KMUSERKEY2|KMCERTSERVTYPE|KMCERTSERVNUM|KMCERTSELECTTYPE|KMCOETYPE) [^\n]*\n/m;
+
+my $out;
+my $enter_pos = index($data, "\@PJL ENTER LANGUAGE");
+if ($enter_pos >= 0) {
+    my $header = substr($data, 0, $enter_pos);
+    my $rest   = substr($data, $enter_pos);      # starts at @PJL ENTER LANGUAGE
+    $header =~ s/$strip//g;
+    if ($header =~ /(\@PJL JOB[^\n]*\n)/) {
+        my $job_line = $1;
+        $header =~ s/\Q$job_line\E/$job_line$auth_block/;
+    } else {
+        $header = "\x1b%-12345X\@PJL JOB\n" . $auth_block . $header;
+    }
+    $out = $header . $rest;
+} else {
+    # Not a PJL-wrapped job — strip, then inject after @PJL JOB or synthesize one.
+    $data =~ s/$strip//g;
+    if ($data =~ /(\@PJL JOB[^\n]*\n)/) {
+        my $job_line = $1;
+        $data =~ s/\Q$job_line\E/$job_line$auth_block/;
+        $out = $data;
+    } else {
+        $out = "\x1b%-12345X\@PJL JOB\n" . $auth_block
+             . "\@PJL ENTER LANGUAGE = POSTSCRIPT\n" . $data
+             . "\n\x1b%-12345X\@PJL EOJ\n\x1b%-12345X";
+    }
+}
+
+my $sock = IO::Socket::INET->new(
+    PeerAddr => $host, PeerPort => $port, Proto => "tcp", Timeout => 30,
+) or do { print STDERR "ERROR: cannot connect to $host:$port: $!\n"; exit 1; };
+binmode($sock);
+$sock->autoflush(1);
+print $sock $out;
+$sock->shutdown(1);   # SHUT_WR
+$sock->close();
+
+print STDERR "INFO: sent " . length($out) . " bytes to $host:$port (auth user=$user)\n";
+exit 0;
