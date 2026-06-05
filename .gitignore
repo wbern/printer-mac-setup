@@ -3,3 +3,6 @@ node_modules/
 __pycache__/
 *.pyc
 verify/
+
+# Windows source + drivers (large binaries, contain real creds): keep local only
+printer-windows-setup/
